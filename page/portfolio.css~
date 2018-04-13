@@ -164,7 +164,7 @@ name {
 #profile-img{
     height: 250px;
     width: 250px;
-    background-image: url(vineet.jpg);
+    background-image: url(aneek1.jpg);
 }
 
 span.highlight {
