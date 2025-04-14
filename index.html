@@ -219,8 +219,70 @@ project involved real time detection of hand gestures and tracking the fingers t
 <em><b> A. Roy</b> </em><br><a href="https://docs.google.com/presentation/d/1q-PAG7eFkVAKKNpQXVbMv0JDW9PzJ6Pf9QYDPWJqs3Y/edit?usp=sharing">[Seminar Slides]</a> | <a href="page/seminar.pdf">[Abstract]</a> | 19th April, 2018 
   </div>
   <br> <br> <br>
-   Good old EMACS :<br>
-  <img src="https://imgs.xkcd.com/comics/real_programmers.png">
+
+  <title>Loading latest XKCD...</title>
+  <style>
+    h2 {
+      font-family: sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+
+      margin: 10px 0;
+    }
+
+    #comic {
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+
+    em {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<h2>
+
+  <div id="comic">Loading latest XKCD comic...</div>
+
+  <script>
+    async function fetchAndDisplayXKCD() {
+      // Updated CORS proxy
+      const corsProxy = 'https://api.allorigins.win/raw?url=';
+      const url = encodeURIComponent('https://xkcd.com/info.0.json');
+
+      try {
+        const response = await fetch(corsProxy + url);
+        if (!response.ok) throw new Error('Network response failed');
+
+        const { img, alt, safe_title } = await response.json();
+
+        document.title = `XKCD - ${safe_title}`;
+
+        document.getElementById('comic').innerHTML = `
+          <h3>${safe_title}</h3>
+          <img src="${img}" alt="${alt}" title="${alt}">
+          <p><em>${alt}</em></p>
+        `;
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('comic').textContent = 'Failed to load latest XKCD comic.';
+      }
+    }
+
+    window.onload = fetchAndDisplayXKCD;
+  </script>
+</h2>
+
+  
 </div >
 
 <div>
