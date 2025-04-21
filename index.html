@@ -254,7 +254,7 @@ project involved real time detection of hand gestures and tracking the fingers t
   <div id="comic">Loading latest XKCD comic...</div>
 
   <script>
-    async function fetchWithRetry(url, retries = 3, delay = 1000) {
+    async function fetchWithRetry(url, retries = 5, delay = 1000) {
       for (let i = 0; i < retries; i++) {
         try {
           const response = await fetch(url);
