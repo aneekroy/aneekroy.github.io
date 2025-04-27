@@ -254,14 +254,14 @@ project involved real time detection of hand gestures and tracking the fingers t
   <div id="comic">Loading latest XKCD comic...</div>
 
   <script>
-    async function fetchWithRetry(url, retries = 5, delay = 1000) {
+    async function fetchWithRetry(url, retries = 5, delay = 500) {
       for (let i = 0; i < retries; i++) {
         try {
-          const response = await fetch(url);
+          const response = await fetch(url, { cache: "no-store" });
           if (!response.ok) throw new Error('Fetch failed');
           return await response.json();
         } catch (e) {
-          console.warn(`Attempt ${i + 1} failed. Retrying...`);
+          console.warn(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`);
           await new Promise(res => setTimeout(res, delay));
         }
       }
@@ -270,15 +270,16 @@ project involved real time detection of hand gestures and tracking the fingers t
   
     async function fetchAndDisplayXKCD() {
       const corsProxy = 'https://api.allorigins.win/raw?url=';
-      const url = encodeURIComponent('https://xkcd.com/info.0.json');
+      const targetUrl = 'https://xkcd.com/info.0.json';
+      const fullUrl = corsProxy + encodeURIComponent(targetUrl);
   
       try {
-        const { img, alt, safe_title } = await fetchWithRetry(corsProxy + url);
+        const { img, alt, safe_title } = await fetchWithRetry(fullUrl);
   
         document.title = `XKCD - ${safe_title}`;
         document.getElementById('comic').innerHTML = `
           <h3>${safe_title}</h3>
-          <img src="${img}" alt="${alt}" title="${alt}">
+          <img src="${img}" alt="${alt}" title="${alt}" style="max-width:100%;height:auto;">
           <p><em>${alt}</em></p>
         `;
       } catch (error) {
@@ -287,7 +288,7 @@ project involved real time detection of hand gestures and tracking the fingers t
       }
     }
   
-    window.onload = fetchAndDisplayXKCD;
+    window.addEventListener('load', fetchAndDisplayXKCD);
   </script>
   
 </h2>
