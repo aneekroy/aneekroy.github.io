@@ -68,7 +68,7 @@
     <nav class="sticky top-0 z-50 bg-white/95 dark:bg-academic-950/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
             <!-- Transformer Architecture Logo (SVG) -->
-            <div class="flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo(0,0)">
+            <a href="index.html" class="flex items-center gap-4 cursor-pointer group">
                 <svg viewBox="0 0 100 100" class="w-10 h-10 text-academic-600 dark:text-academic-400 stroke-current group-hover:opacity-80 transition-opacity" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
                     <!-- Internal Layers (Attention & FeedForward) -->
                     <rect x="35" y="60" width="40" height="15" rx="3" stroke-width="5" />
@@ -91,9 +91,10 @@
                     <span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white leading-none">Aneek Roy</span>
                     <span class="text-[10px] uppercase tracking-widest text-academic-600 dark:text-academic-400 font-medium">Research Blog</span>
                 </div>
-            </div>
+            </a>
 
             <div class="flex items-center gap-6">
+                <a href="index.html" class="hidden md:block text-sm font-medium text-slate-500 hover:text-academic-600 dark:text-slate-400 dark:hover:text-academic-400 transition-colors sans-font">← Home</a>
                 <a href="#literature" class="hidden md:block text-sm font-medium text-slate-500 hover:text-academic-600 dark:text-slate-400 dark:hover:text-academic-400 transition-colors sans-font">Literature</a>
                 <a href="#analysis" class="hidden md:block text-sm font-medium text-slate-500 hover:text-academic-600 dark:text-slate-400 dark:hover:text-academic-400 transition-colors sans-font">Analysis</a>
 
@@ -159,7 +160,7 @@
                     <div class="text-xs text-slate-500 uppercase font-medium mt-1">Emerging Trends</div>
                 </div>
                 <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
-                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">60</div>
+                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">61</div>
                     <div class="text-xs text-slate-500 uppercase font-medium mt-1">Papers Reviewed</div>
                 </div>
             </div>
@@ -234,7 +235,7 @@
         <section id="literature" class="mb-20 scroll-mt-24">
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 sans-font flex justify-between items-center">
                 <span>4. Literature Review</span>
-                <span class="text-xs font-normal text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">60 Papers • Searchable</span>
+                <span class="text-xs font-normal text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">61 Papers • Searchable</span>
             </h2>
 
             <!-- Search Controls -->
@@ -378,7 +379,7 @@
             {
                 id: 8, title: "Glance2Gaze: Efficient Vision-Language Models", venue: "NeurIPS", year: 2025, authors: "Juan Chen et al.",
                 summary: "Two-stage visual token reduction: global 'glance' fusion + selective 'gaze' token compression. Improved performance with equal/lower compute.",
-                accuracy: 86.2, flops: 1.8, params: 150, tags: ["Token Pruning", "SOTA"], link: "https://openreview.net"
+                accuracy: 86.2, flops: 1.8, params: 150, tags: ["Token Pruning", "SOTA"], link: "https://openreview.net/pdf?id=gm65gK3uOJ"
             },
             {
                 id: 9, title: "VisionThink: Smart VLM via RL", venue: "NeurIPS", year: 2025, authors: "Senqiao Yang et al.",
@@ -388,7 +389,7 @@
             {
                 id: 10, title: "MultiBench: Multiscale Benchmarks for Multimodal Representation Learning", venue: "NeurIPS", year: 2021, authors: "Paul Pu Liang et al.",
                 summary: "Large-scale benchmark for multimodal learning with evaluation of time/space complexity. Reports inference time and memory for compact models suitable for mobile devices.",
-                accuracy: 74.0, flops: 2.0, params: 50, tags: ["Benchmark"], link: "https://pmc.ncbi.nlm.nih.gov"
+                accuracy: 74.0, flops: 2.0, params: 50, tags: ["Benchmark"], link: "https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/file/37693cfc748049e45d87b8c7d8b9aacd-Paper-round1.pdf"
             },
             {
                 id: 11, title: "OpenVision: Cost-Effective Vision Encoders for Multimodal Learning", venue: "CVPR", year: 2025, authors: "Xianhang Li et al.",
@@ -403,7 +404,7 @@
             {
                 id: 13, title: "Dynamic Multimodal Fusion (DynMM)", venue: "CVPR", year: 2023, authors: "Zihui Xue, Radu Marculescu",
                 summary: "Adaptive approach generating data-dependent forward paths. Gating function makes on-the-fly modality decisions. Reduces computation by 46.5% for sentiment analysis.",
-                accuracy: 83.0, flops: 2.2, params: 120, tags: ["Dynamic", "Gating"], link: "https://openaccess.thecvf.com"
+                accuracy: 83.0, flops: 2.2, params: 120, tags: ["Dynamic", "Gating"], link: "https://openaccess.thecvf.com/content/CVPR2023W/MULA/papers/Xue_Dynamic_Multimodal_Fusion_CVPRW_2023_paper.pdf"
             },
             {
                 id: 14, title: "LLaVA-Mini: Efficient Multimodal Models with One Vision Token", venue: "arXiv", year: 2025, authors: "Shaolei Zhang et al.",
@@ -413,27 +414,27 @@
             {
                 id: 15, title: "InternVL3.5: Visual Resolution Router for Efficiency", venue: "arXiv", year: 2025, authors: "Wenhai Wang et al.",
                 summary: "Visual Resolution Router (ViR) dynamically adjusts visual token resolution. Decoupled deployment separates vision/language across GPUs. Achieves 4.05x inference speedup.",
-                accuracy: 88.0, flops: 2.0, params: 400, tags: ["Dynamic Resolution", "SOTA"], link: "https://arxiv.org/abs/2505.00000"
+                accuracy: 88.0, flops: 2.0, params: 400, tags: ["Dynamic Resolution", "SOTA"], link: "https://arxiv.org/abs/2508.18265"
             },
             {
                 id: 16, title: "MoMa: Mixture of Modality-Aware Experts", venue: "arXiv", year: 2024, authors: "Xi Victoria Lin et al.",
                 summary: "Modality-aware MoE architecture for efficient early-fusion pre-training. Achieves 3.7x overall FLOPs savings vs dense baseline through modality-specific routing.",
-                accuracy: 82.5, flops: 1.0, params: 200, tags: ["MoE", "Pre-training"], link: "https://arxiv.org/abs/2407.00000"
+                accuracy: 82.5, flops: 1.0, params: 200, tags: ["MoE", "Pre-training"], link: "https://arxiv.org/pdf/2407.21770"
             },
             {
                 id: 17, title: "QLIP: Text-Aligned Visual Tokenization", venue: "arXiv", year: 2025, authors: "Yue Zhao et al.",
                 summary: "Quantized Language-Image Pretraining combining reconstruction quality with zero-shot understanding. Drop-in replacement for LLaVA visual encoder.",
-                accuracy: 85.0, flops: 1.3, params: 90, tags: ["Tokenization", "Quantized"], link: "https://arxiv.org/abs/2502.00000"
+                accuracy: 85.0, flops: 1.3, params: 90, tags: ["Tokenization", "Quantized"], link: "https://arxiv.org/pdf/2502.05178"
             },
             {
                 id: 18, title: "OneEncoder: Lightweight Multimodal Framework", venue: "Neural Comp.", year: 2025, authors: "Bilal Faye et al.",
                 summary: "Two-step training: Universal Projection for image-text, then frozen with alignment layer for new modalities. Reduces training costs and paired data needs.",
-                accuracy: 80.0, flops: 1.1, params: 35, tags: ["Lightweight", "Progressive"], link: "https://link.springer.com"
+                accuracy: 80.0, flops: 1.1, params: 35, tags: ["Lightweight", "Progressive"], link: "https://arxiv.org/pdf/2409.11059"
             },
             {
-                id: 19, title: "MQuant: Static Quantization for MLLMs", venue: "ISCA", year: 2025, authors: "Jiayi Yu et al.",
+                id: 19, title: "MQuant: Static Quantization for MLLMs", venue: "ACM International Conference on Multimedia", year: 2025, authors: "Jiayi Yu et al.",
                 summary: "Post-training W4A8 quantization for MLLMs. Addresses visual token latency and outliers. Achieves <1% accuracy degradation with 30% latency reduction.",
-                accuracy: 86.0, flops: 0.9, params: 180, tags: ["Quantization", "Inference"], link: "https://dl.acm.org"
+                accuracy: 86.0, flops: 0.9, params: 180, tags: ["Quantization", "Inference"], link: "https://dl.acm.org/doi/pdf/10.1145/3746027.3755433"
             },
             {
                 id: 20, title: "mPLUG-Owl3: Long Image-Sequence Understanding", venue: "arXiv", year: 2024, authors: "Jiabo Ye et al.",
@@ -495,7 +496,7 @@
             {
                 id: 31, title: "PVC: Progressive Visual Token Compression", venue: "CVPR", year: 2025, authors: "Yang et al.",
                 summary: "Unified compression for images and videos. Progressive encoding with AdaLN layers. Reduces tokens per image from 256 to 64 while maintaining performance.",
-                accuracy: 85.5, flops: 1.5, params: 8000, tags: ["Progressive", "Unified"], link: "https://openaccess.thecvf.com"
+                accuracy: 85.5, flops: 1.5, params: 8000, tags: ["Progressive", "Unified"], link: "https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_PVC_Progressive_Visual_Token_Compression_for_Unified_Image_and_Video_CVPR_2025_paper.pdf"
             },
             {
                 id: 32, title: "LongVU: Spatiotemporal Adaptive Compression", venue: "arXiv", year: 2024, authors: "Shen et al.",
@@ -538,24 +539,24 @@
                 accuracy: 84.1, flops: 2.0, params: 5000, tags: ["MoE", "Sparse", "Contrastive"], link: "https://arxiv.org/abs/2206.02770"
             },
             {
-                id: 40, title: "LLM-VTP: LLM-Reasoned Visual Token Pruning", venue: "ICLR", year: 2025, authors: "Xiaohu Huang et al.",
+                id: 40, title: "PruneVid: Visual Token Pruning for Efficient Video Large Language Models", venue: "ICLR", year: 2025, authors: "Xiaohu Huang et al.",
                 summary: "Leverages LLM's own reasoning to decide which video frame tokens are relevant to query. Training-free approach prunes 80-90% of visual tokens in video QA while maintaining competitive accuracy.",
-                accuracy: 83.0, flops: 0.8, params: 7000, tags: ["Video", "LLM-Guided", "Training-Free"], link: "https://openreview.net"
+                accuracy: 83.0, flops: 0.8, params: 7000, tags: ["Video", "LLM-Guided", "Training-Free"], link: "https://arxiv.org/pdf/2412.16117"
             },
             {
                 id: 41, title: "DyCoke: Dynamic Compression of Tokens for Fast Video LLMs", venue: "CVPR", year: 2025, authors: "Keda Tao et al.",
                 summary: "Two-stage token compression for video-LLMs. Merges redundant tokens across frames (temporal), then prunes from KV cache (spatial). Retains ~15 tokens/frame, 1.5x speedup without fine-tuning.",
-                accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Video", "KV-Cache", "Temporal"], link: "https://openaccess.thecvf.com"
+                accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Video", "KV-Cache", "Temporal"], link: "http://openaccess.thecvf.com/content/CVPR2025/papers/Tao_DyCoke_Dynamic_Compression_of_Tokens_for_Fast_Video_Large_Language_CVPR_2025_paper.pdf"
             },
             {
                 id: 42, title: "Token Sequence Compression for Efficient Multimodal Computing", venue: "arXiv", year: 2025, authors: "Yasmine Omri et al.",
                 summary: "Extensive study of visual token selection and merging strategies. Found cluster-based token aggregation outperforms prior SOTA. Demonstrates significant redundancy in vision encoders.",
-                accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Survey", "Clustering", "Aggregation"], link: "https://arxiv.org/abs/2501.00000"
+                accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Survey", "Clustering", "Aggregation"], link: "https://arxiv.org/pdf/2504.17892"
             },
             {
                 id: 43, title: "TopV: Compatible Token Pruning with Inference Time Optimization", venue: "CVPR", year: 2025, authors: "Yang et al.",
                 summary: "Formulates token pruning as optimization during prefilling. Uses Sinkhorn algorithm with feature similarity, spatial distance, and central distance factors.",
-                accuracy: 84.5, flops: 1.0, params: 7000, tags: ["Optimization", "Sinkhorn"], link: "https://openaccess.thecvf.com"
+                accuracy: 84.5, flops: 1.0, params: 7000, tags: ["Optimization", "Sinkhorn"], link: "https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_TopV_Compatible_Token_Pruning_with_Inference_Time_Optimization_for_Fast_CVPR_2025_paper.pdf"
             },
             {
                 id: 44, title: "PruneVid: Visual Token Pruning for Efficient Video Large Language Models", venue: "ACL", year: 2025, authors: "Various",
@@ -565,32 +566,32 @@
             {
                 id: 45, title: "Dynamic-LLaVA: Efficient MLLM via Dynamic Vision-Language Context Sparsification", venue: "ICLR", year: 2025, authors: "Various",
                 summary: "Dynamically sparsifies vision-language context based on input complexity. Adapts computation to content difficulty for efficient multimodal processing.",
-                accuracy: 84.0, flops: 1.2, params: 7000, tags: ["Dynamic", "Context Sparsification"], link: "https://openreview.net"
+                accuracy: 84.0, flops: 1.2, params: 7000, tags: ["Dynamic", "Context Sparsification"], link: "https://proceedings.iclr.cc/paper_files/paper/2025/file/aeafb73dfed3007ec5299be1604d6f99-Paper-Conference.pdf"
             },
             {
-                id: 46, title: "DivPrune: Diversity-based Visual Token Pruning for Large Multimodal Models", venue: "ICLR", year: 2025, authors: "Various",
+                id: 46, title: "DivPrune: Diversity-based Visual Token Pruning for Large Multimodal Models", venue: "ICLR", year: 2025, authors: "Saeed Ranjbar Alvar, Gursimran Singh†, Mohammad Akbari†, Yong Zhang",
                 summary: "Prunes visual tokens while preserving diversity. Ensures remaining tokens cover diverse visual concepts rather than just high-attention regions.",
-                accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Diversity", "Pruning"], link: "https://openreview.net"
+                accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Diversity", "Pruning"], link: "https://openaccess.thecvf.com/content/CVPR2025/papers/Alvar_DivPrune_Diversity-based_Visual_Token_Pruning_for_Large_Multimodal_Models_CVPR_2025_paper.pdf"
             },
             {
                 id: 47, title: "PACT: Pruning and Clustering Token Reduction for Faster VLMs", venue: "CVPR", year: 2025, authors: "Various",
                 summary: "Two-stage approach: first prunes unimportant tokens, then clusters similar remaining tokens. Preserves semantic information while reducing compute.",
-                accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Pruning", "Clustering", "Two-Stage"], link: "https://openaccess.thecvf.com"
+                accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Pruning", "Clustering", "Two-Stage"], link: "https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_PACT_Pruning_and_Clustering_Token_Reduction_for_Faster_VLMs_CVPR_2025_paper.pdf"
             },
             {
-                id: 48, title: "AVG-LLaVA: Large Multimodal Model with Adaptive Visual Granularity", venue: "arXiv", year: 2024, authors: "Various",
+                id: 48, title: "AVG-LLaVA: Large Multimodal Model with Adaptive Visual Granularity", venue: "ACL", year: 2025, authors: "Zhibin Lan, Liqiang Niu, Fandong Meng, Wenbo Li, Jie Zhou, Jinsong Su",
                 summary: "Adapts visual token granularity based on image complexity. Simple images use fewer tokens, complex images retain more detail.",
-                accuracy: 83.0, flops: 1.3, params: 7000, tags: ["Adaptive", "Granularity"], link: "https://arxiv.org/abs/2403.00000"
+                accuracy: 83.0, flops: 1.3, params: 7000, tags: ["Adaptive", "Granularity"], link: "https://aclanthology.org/2025.findings-acl.865.pdf"
             },
             {
-                id: 49, title: "TRIM: Less is More - Simple Token Reduction for Efficient MLLMs", venue: "arXiv", year: 2024, authors: "Various",
+                id: 49, title: "Less is More: A Simple yet Effective Token Reduction Method for Efficient Multi-modal LLMs", venue: "ACL", year: 2024, authors: "Various",
                 summary: "Simple yet effective token reduction method. Demonstrates that straightforward approaches can match complex methods with proper implementation.",
-                accuracy: 82.5, flops: 1.0, params: 7000, tags: ["Simple", "Effective"], link: "https://arxiv.org/abs/2406.00000"
+                accuracy: 82.5, flops: 1.0, params: 7000, tags: ["Simple", "Effective"], link: "https://aclanthology.org/2025.coling-main.508.pdf"
             },
             {
-                id: 50, title: "Run-Length Tokenization: Faster Video Transformers", venue: "NeurIPS", year: 2024, authors: "Various",
+                id: 50, title: "Don't Look Twice: Faster Video Transformers with Run-Length Tokenization", venue: "NeurIPS", year: 2024, authors: "Rohan Choudhury, Guanglei Zhu Sihan Liu, Koichiro Niinuma,Kris M. Kitani, László A. Jeni ",
                 summary: "Don't Look Twice - exploits temporal redundancy in video via run-length encoding of tokens. Significantly reduces computation for video understanding.",
-                accuracy: 82.0, flops: 0.8, params: 7000, tags: ["Video", "Run-Length", "Temporal"], link: "https://proceedings.neurips.cc"
+                accuracy: 82.0, flops: 0.8, params: 7000, tags: ["Video", "Run-Length", "Temporal"], link: "https://arxiv.org/pdf/2411.05222"
             },
             {
                 id: 51, title: "HyperVL: Efficient Dynamic MLLM for Edge Devices", venue: "arXiv", year: 2024, authors: "Various",
@@ -618,29 +619,34 @@
                 accuracy: 82.5, flops: 1.1, params: 7000, tags: ["Window", "Concatenation"], link: "https://openaccess.thecvf.com/content/CVPR2025W/eLVM/papers/Li_Window_Token_Concatenation_for_Efficient_Visual_Large_Language_Models_CVPRW_2025_paper.pdf"
             },
             {
-                id: 56, title: "HICom: Hierarchical Compression for Vision-Language Models", venue: "CVPR", year: 2025, authors: "Various",
+                id: 56, title: "HICom: Hierarchical Compression for Vision-Language Models", venue: "arxiv", year: 2025, authors: "Various",
                 summary: "Multi-level hierarchical compression strategy. Compresses at patch, region, and image levels for maximum efficiency with minimal information loss.",
-                accuracy: 84.0, flops: 0.9, params: 7000, tags: ["Hierarchical", "Multi-Level"], link: "https://openaccess.thecvf.com"
+                accuracy: 84.0, flops: 0.9, params: 7000, tags: ["Hierarchical", "Multi-Level"], link: "https://arxiv.org/pdf/2406.11884"
             },
             {
                 id: 57, title: "TwigVLM: Efficient Visual Token Pruning via Tree Structure", venue: "ICCV", year: 2025, authors: "Various",
                 summary: "Organizes visual tokens in tree structure for efficient pruning. Prunes entire branches of less important tokens while preserving key visual information.",
-                accuracy: 83.5, flops: 1.0, params: 7000, tags: ["Tree Structure", "Branch Pruning"], link: "https://openaccess.thecvf.com"
+                accuracy: 83.5, flops: 1.0, params: 7000, tags: ["Tree Structure", "Branch Pruning"], link: "https://openaccess.thecvf.com/content/ICCV2025/papers/Shao_Growing_a_Twig_to_Accelerate_Large_Vision-Language_Models_ICCV_2025_paper.pdf"
             },
             {
-                id: 58, title: "LLaVolta: Stage-wise Visual Token Compression", venue: "arXiv", year: 2024, authors: "Various",
-                summary: "Stage-wise training with heavy compression in early epochs/layers, gradually relaxed. Balances efficiency and performance through curriculum learning.",
-                accuracy: 83.0, flops: 1.1, params: 7000, tags: ["Stage-wise", "Curriculum"], link: "https://arxiv.org/abs/2407.00000"
+                id: 58, title: "Efficient Large Multi-modal Models via Visual Context Compression", venue: "arXiv", year: 2024, authors: "Jieneng Chen, Luoxin Ye, Ju He, Zhao-Yang Wang, Daniel Khashabi, Alan Yuille",
+                summary: "Introduces Visual Context Compressor using average pooling and LLaVolta, a staged training scheme that progressively compresses visual tokens from heavy to light compression during training. Eliminating up to 70% of visual tokens leads to only 3% accuracy reduction, indicating significant redundancy. Achieves 16% training cost reduction and 24% inference latency improvement.",
+                accuracy: 83.0, flops: 1.1, params: 7000, tags: ["Stage-wise", "Curriculum", "Visual Context Compressor"], link: "https://arxiv.org/abs/2406.20092v2"
             },
             {
                 id: 59, title: "QG-VTC: Query-Guided Visual Token Compression", venue: "arXiv", year: 2024, authors: "Various",
                 summary: "Computes token relevance by embedding user's question and correlating with vision tokens. Task-aware compression keeps only query-relevant visual information.",
-                accuracy: 83.5, flops: 1.0, params: 7000, tags: ["Query-Guided", "Task-Aware"], link: "https://arxiv.org/abs/2408.00000"
+                accuracy: 83.5, flops: 1.0, params: 7000, tags: ["Query-Guided", "Task-Aware"], link: "https://arxiv.org/pdf/2504.00654"
             },
             {
                 id: 60, title: "Inference Optimal VLMs: Fewer Visual Tokens, More Parameters", venue: "ICLR", year: 2025, authors: "Various",
                 summary: "Studies optimal trade-off between LLM size and visual tokens. Finds that fewer visual tokens with larger LLMs often outperforms more tokens with smaller LLMs.",
                 accuracy: 85.0, flops: 1.5, params: 13000, tags: ["Scaling Laws", "Trade-off"], link: "https://arxiv.org/abs/2411.03312"
+            },
+            {
+                id: 61, title: "LLaVolta: Stage-wise Visual Token Compression", venue: "arXiv", year: 2024, authors: "Various",
+                summary: "Stage-wise training with heavy compression in early epochs/layers, gradually relaxed. Balances efficiency and performance through curriculum learning.",
+                accuracy: 83.0, flops: 1.1, params: 7000, tags: ["Stage-wise", "Curriculum"], link: "https://arxiv.org/pdf/2406.20092v1"
             }
         ];
 
