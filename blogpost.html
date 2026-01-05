@@ -539,11 +539,6 @@
                 accuracy: 84.1, flops: 2.0, params: 5000, tags: ["MoE", "Sparse", "Contrastive"], link: "https://arxiv.org/abs/2206.02770"
             },
             {
-                id: 40, title: "PruneVid: Visual Token Pruning for Efficient Video Large Language Models", venue: "ICLR", year: 2025, authors: "Xiaohu Huang et al.",
-                summary: "Leverages LLM's own reasoning to decide which video frame tokens are relevant to query. Training-free approach prunes 80-90% of visual tokens in video QA while maintaining competitive accuracy.",
-                accuracy: 83.0, flops: 0.8, params: 7000, tags: ["Video", "LLM-Guided", "Training-Free"], link: "https://arxiv.org/pdf/2412.16117"
-            },
-            {
                 id: 41, title: "DyCoke: Dynamic Compression of Tokens for Fast Video LLMs", venue: "CVPR", year: 2025, authors: "Keda Tao et al.",
                 summary: "Two-stage token compression for video-LLMs. Merges redundant tokens across frames (temporal), then prunes from KV cache (spatial). Retains ~15 tokens/frame, 1.5x speedup without fine-tuning.",
                 accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Video", "KV-Cache", "Temporal"], link: "http://openaccess.thecvf.com/content/CVPR2025/papers/Tao_DyCoke_Dynamic_Compression_of_Tokens_for_Fast_Video_Large_Language_CVPR_2025_paper.pdf"
@@ -569,7 +564,7 @@
                 accuracy: 84.0, flops: 1.2, params: 7000, tags: ["Dynamic", "Context Sparsification"], link: "https://proceedings.iclr.cc/paper_files/paper/2025/file/aeafb73dfed3007ec5299be1604d6f99-Paper-Conference.pdf"
             },
             {
-                id: 46, title: "DivPrune: Diversity-based Visual Token Pruning for Large Multimodal Models", venue: "ICLR", year: 2025, authors: "Saeed Ranjbar Alvar, Gursimran Singh†, Mohammad Akbari†, Yong Zhang",
+                id: 46, title: "DivPrune: Diversity-based Visual Token Pruning for Large Multimodal Models", venue: "CVPR", year: 2025, authors: "Saeed Ranjbar Alvar, Gursimran Singh†, Mohammad Akbari†, Yong Zhang",
                 summary: "Prunes visual tokens while preserving diversity. Ensures remaining tokens cover diverse visual concepts rather than just high-attention regions.",
                 accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Diversity", "Pruning"], link: "https://openaccess.thecvf.com/content/CVPR2025/papers/Alvar_DivPrune_Diversity-based_Visual_Token_Pruning_for_Large_Multimodal_Models_CVPR_2025_paper.pdf"
             },
@@ -606,12 +601,12 @@
             {
                 id: 53, title: "InternVL 2.5: Pixel Unshuffle for Efficient High-Resolution", venue: "arXiv", year: 2024, authors: "OpenGVLab",
                 summary: "Pixel unshuffle reduces visual tokens from 1024 to 256 per 448x448 tile. Improves scalability for high-resolution image processing.",
-                accuracy: 87.0, flops: 1.8, params: 8000, tags: ["Pixel Unshuffle", "High-Resolution"], link: "https://arxiv.org/abs/2412.00000"
+                accuracy: 87.0, flops: 1.8, params: 8000, tags: ["Pixel Unshuffle", "High-Resolution"], link: "https://arxiv.org/pdf/2412.05271v1"
             },
             {
                 id: 54, title: "OmniVLM: Sub-Billion Parameter VLM for On-Device Inference", venue: "arXiv", year: 2024, authors: "Various",
                 summary: "Token compression reduces visual sequence from 729 to 81 tokens. Sub-billion parameters enable efficient on-device deployment while maintaining visual-semantic fidelity.",
-                accuracy: 79.0, flops: 0.5, params: 800, tags: ["Sub-Billion", "On-Device", "Compression"], link: "https://arxiv.org/abs/2410.00000"
+                accuracy: 79.0, flops: 0.5, params: 800, tags: ["Sub-Billion", "On-Device", "Compression"], link: "https://arxiv.org/pdf/2412.11475"
             },
             {
                 id: 55, title: "Window Token Concatenation for Efficient Visual Large Language Models", venue: "CVPR-W", year: 2025, authors: "Yifan Li, Wentao Bao, Botao Ye, Zhen Tan, Tianlong Chen, Huan Liu, Yu Kong",
