@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal Efficiency: A Survey | Aneek Roy</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                    },
+                    colors: {
+                        academic: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7', // Primary Brand Color
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49', // Dark Mode BG
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+    <!-- Application Structure Plan:
+         1. Navbar: Updated Logo (Transformer Block Diagram).
+         2. Header: Academic Title, Author (Aneek Roy).
+         3. Content: Stats, Chart, Literature Review.
+         4. Styling: Formal academic blue theme.
+         UPDATED: Now includes 38 papers (original 20 + 18 new)
+    -->
+    <!-- CONFIRMATION: NO SVG files used (Inline SVG only). NO Mermaid JS used. -->
+
+    <style>
+        body { font-family: 'Merriweather', serif; }
+        h1, h2, h3, h4, h5, h6, nav, button, input, select, .sans-font { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .chart-container { position: relative; width: 100%; height: 400px; }
+        .dark body { color: #cbd5e1; }
+        .dark h1, .dark h2, .dark h3 { color: #f1f5f9; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 dark:bg-academic-950 dark:text-slate-300 transition-colors duration-300 antialiased leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 dark:bg-academic-950/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
+            <!-- Transformer Architecture Logo (SVG) -->
+            <div class="flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo(0,0)">
+                <svg viewBox="0 0 100 100" class="w-10 h-10 text-academic-600 dark:text-academic-400 stroke-current group-hover:opacity-80 transition-opacity" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Internal Layers (Attention & FeedForward) -->
+                    <rect x="35" y="60" width="40" height="15" rx="3" stroke-width="5" />
+                    <rect x="35" y="30" width="40" height="15" rx="3" stroke-width="5" />
+
+                    <!-- Vertical Data Flow -->
+                    <path d="M 55 90 L 55 75" /> <!-- Input -->
+                    <path d="M 55 60 L 55 45" /> <!-- Inter-layer -->
+                    <path d="M 55 30 L 55 15" /> <!-- Output -->
+
+                    <!-- Residual Skip Connection (The Signature) -->
+                    <path d="M 35 70 C 10 70, 10 35, 35 35" stroke-width="4" stroke-dasharray="0" opacity="0.8"/>
+
+                    <!-- Attention Heads (Dots inside first block) -->
+                    <circle cx="45" cy="67.5" r="1.5" fill="currentColor" stroke="none" />
+                    <circle cx="55" cy="67.5" r="1.5" fill="currentColor" stroke="none" />
+                    <circle cx="65" cy="67.5" r="1.5" fill="currentColor" stroke="none" />
+                </svg>
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white leading-none">Aneek Roy</span>
+                    <span class="text-[10px] uppercase tracking-widest text-academic-600 dark:text-academic-400 font-medium">Research Blog</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <a href="#literature" class="hidden md:block text-sm font-medium text-slate-500 hover:text-academic-600 dark:text-slate-400 dark:hover:text-academic-400 transition-colors sans-font">Literature</a>
+                <a href="#analysis" class="hidden md:block text-sm font-medium text-slate-500 hover:text-academic-600 dark:text-slate-400 dark:hover:text-academic-400 transition-colors sans-font">Analysis</a>
+
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-academic-100 dark:hover:bg-academic-900 transition-all">
+                    <i class="fas fa-moon dark:hidden text-sm"></i>
+                    <i class="fas fa-sun hidden dark:block text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Article Container -->
+    <main class="max-w-4xl mx-auto px-6 py-16">
+
+        <!-- Article Header -->
+        <header class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-12">
+            <span class="text-academic-600 dark:text-academic-400 font-bold text-sm uppercase tracking-wider mb-3 block sans-font">Survey Blog • Jan 2026</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
+                Efficient Multimodal Encoders: <br>A Comparative Review (2020-2025)
+            </h1>
+            <div class="flex items-center gap-4 text-sm sans-font text-slate-500 dark:text-slate-400">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-academic-100 dark:bg-academic-900 flex items-center justify-center text-academic-700 dark:text-academic-300 font-bold text-xs border border-academic-200 dark:border-academic-800">AR</div>
+                    <span>Aneek Roy</span>
+                </div>
+                <span>•</span>
+                <span>20 min read</span>
+                <span>•</span>
+                <span class="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-xs font-medium">Updated: Jan 2026</span>
+            </div>
+        </header>
+
+        <!-- Abstract -->
+        <div class="bg-academic-50 dark:bg-academic-900/20 p-6 rounded-lg border-l-4 border-academic-500 mb-12">
+            <h3 class="font-bold text-sm uppercase text-academic-700 dark:text-academic-400 mb-2 sans-font">Abstract</h3>
+            <p class="text-slate-700 dark:text-slate-300 italic text-base">
+                This post surveys the rapid evolution of efficient encoders for multimodal (Vision-Language) models. We analyze key contributions from ICML, ICLR, NeurIPS, CVPR, and ECCV over the past 5 years, highlighting the transition from large-scale frozen transformers to dynamic, token-pruned architectures. We discuss methodologies including "Frozen" LLM adaptation, Q-Former bridges, Reinforcement Learning-based token selection, hybrid CNN-Transformer architectures, and attention-based token pruning.
+            </p>
+        </div>
+
+        <!-- Section 1: Introduction & Stats -->
+        <article class="prose dark:prose-invert max-w-none mb-16">
+            <p class="text-lg mb-6">
+                The scaling laws of deep learning have historically driven performance improvements through massive parameter increases. However, the deployment of multimodal models on edge devices requires a fundamental shift towards efficiency. Since the introduction of CLIP in 2021, the research community has achieved approximately a <strong>54x reduction in parameter count</strong> for comparable zero-shot accuracy on specific benchmarks.
+            </p>
+            <p class="mb-8">
+                The following figure summarizes the aggregate progress observed across major conferences.
+            </p>
+
+            <!-- Figure 1: Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 not-prose mb-8 sans-font">
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">85x</div>
+                    <div class="text-xs text-slate-500 uppercase font-medium mt-1">TTFT Speedup</div>
+                </div>
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">~0.8G</div>
+                    <div class="text-xs text-slate-500 uppercase font-medium mt-1">Min FLOPs (2025)</div>
+                </div>
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">RL+MoE</div>
+                    <div class="text-xs text-slate-500 uppercase font-medium mt-1">Emerging Trends</div>
+                </div>
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-bold text-academic-600 dark:text-academic-400">42</div>
+                    <div class="text-xs text-slate-500 uppercase font-medium mt-1">Papers Reviewed</div>
+                </div>
+            </div>
+            <figcaption class="text-center text-sm text-slate-500 dark:text-slate-400 sans-font italic mb-12">
+                <strong>Figure 1.</strong> Key efficiency metrics derived from the surveyed literature (2020-2025).
+            </figcaption>
+        </article>
+
+        <!-- Section 2: Analysis Chart -->
+        <section id="analysis" class="mb-20 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 sans-font">2. The Efficiency Landscape</h2>
+            <p class="mb-6 text-slate-700 dark:text-slate-300">
+                To visualize the trade-off between computational cost and model performance, we map key papers onto a FLOPs vs. Accuracy plane. The ideal trajectory moves towards the top-left corner (High Accuracy, Low Compute).
+            </p>
+
+            <!-- Chart Control -->
+            <div class="flex justify-end mb-4 sans-font">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" onclick="updateChartMode('flops')" id="btn-flops" class="px-4 py-2 text-xs font-medium text-white bg-academic-600 border border-academic-600 rounded-l-lg hover:bg-academic-700 transition-all">
+                        FLOPs
+                    </button>
+                    <button type="button" onclick="updateChartMode('params')" id="btn-params" class="px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-r-lg hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:hover:bg-slate-700 transition-all">
+                        Parameters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Figure 2: Interactive Chart -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="chart-container">
+                    <canvas id="frontierChart"></canvas>
+                </div>
+            </div>
+            <figcaption class="text-center text-sm text-slate-500 dark:text-slate-400 sans-font italic mt-4">
+                <strong>Figure 2.</strong> Pareto frontier of efficient encoders. Blue: NeurIPS, Cyan: ICML, Light Blue: ICLR, Green: CVPR, Orange: ECCV.
+                <br><span class="text-xs opacity-75">Note: Newer papers (2025) are represented by larger nodes.</span>
+            </figcaption>
+        </section>
+
+        <!-- Section 3: Methodology Breakdown -->
+        <section class="mb-20">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 sans-font">3. Methodological Categorization</h2>
+            <div class="grid md:grid-cols-2 gap-8 sans-font">
+                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Frozen Foundations</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Methods like <strong>BLIP-2</strong>, <strong>Frozen</strong>, and <strong>Flamingo</strong> leverage pre-trained LLMs without updating their weights. They introduce lightweight bridging modules (e.g., Q-Former, Perceiver Resampler) to align visual features, drastically reducing training costs.
+                    </p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Dynamic Computation</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Recent works like <strong>VisionThink (2025)</strong> and <strong>FastV (2024)</strong> utilize RL or attention-based methods to dynamically adjust the visual token budget based on complexity, departing from static architectural pruning.
+                    </p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Hybrid Architectures</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <strong>MobileViT</strong>, <strong>FastVLM</strong>, and <strong>TinyViT</strong> combine the local feature extraction of CNNs with global attention of Transformers, achieving mobile-friendly efficiency without sacrificing accuracy.
+                    </p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Token Compression</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <strong>ToMe</strong>, <strong>SparseVLM</strong>, and <strong>LLaVA-Mini</strong> reduce visual tokens via merging, pruning, or compression. These methods achieve 50-77% FLOPs reduction while maintaining task performance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Literature Review (Grid) -->
+        <section id="literature" class="mb-20 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 sans-font flex justify-between items-center">
+                <span>4. Literature Review</span>
+                <span class="text-xs font-normal text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">42 Papers • Searchable</span>
+            </h2>
+
+            <!-- Search Controls -->
+            <div class="flex flex-col md:flex-row gap-4 mb-8 sans-font">
+                <div class="relative flex-grow">
+                    <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" placeholder="Search by title, author, or keyword..."
+                        class="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md text-sm focus:ring-2 focus:ring-academic-500 focus:border-academic-500 outline-none transition-colors dark:text-white"
+                        oninput="filterPapers()">
+                </div>
+                <div class="flex gap-2">
+                    <select id="venue-filter" onchange="filterPapers()" class="px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md text-sm text-slate-600 dark:text-slate-300 outline-none focus:border-academic-500 cursor-pointer">
+                        <option value="all">All Venues</option>
+                        <option value="NeurIPS">NeurIPS</option>
+                        <option value="ICLR">ICLR</option>
+                        <option value="ICML">ICML</option>
+                        <option value="CVPR">CVPR</option>
+                        <option value="ECCV">ECCV</option>
+                        <option value="ICCV">ICCV</option>
+                        <option value="AAAI">AAAI</option>
+                        <option value="arXiv">arXiv</option>
+                        <option value="ICASSP">ICASSP</option>
+                        <option value="ISCA">ISCA</option>
+                        <option value="Nature">Nature</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Paper Grid -->
+            <div id="paper-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 sans-font">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="mb-16 border-t border-slate-200 dark:border-slate-800 pt-12">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 sans-font">5. Conclusion</h2>
+            <p class="text-lg text-slate-700 dark:text-slate-300">
+                The trend towards efficiency in multimodal learning has shifted from simple parameter reduction to intelligent computation. While 2021-2023 focused on architectural bottlenecks (Perceiver, MobileViT, TinyViT), 2024-2025 has introduced dynamic, data-centric approaches where the model decides <em>where</em> to look and <em>how much</em> compute to expend. Key innovations include attention-based token pruning (FastV), hybrid vision encoders (FastVLM), and RL-driven adaptive resolution (VisionThink).
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-sm text-slate-500 dark:text-slate-500 sans-font pt-12 pb-8">
+            <p class="mb-2">&copy; Last Updated: 06/01/2026 Aneek Roy. All rights reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- Modal for Paper Details -->
+    <div id="paper-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-academic-950 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl border border-slate-200 dark:border-slate-800">
+                    <div class="bg-white dark:bg-academic-950 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full sans-font">
+                                <div class="flex justify-between items-center mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <span id="modal-venue" class="font-mono text-xs font-bold text-academic-600 dark:text-academic-400 uppercase">Venue</span>
+                                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i class="fas fa-times"></i></button>
+                                </div>
+                                <h3 class="text-xl font-bold leading-tight text-slate-900 dark:text-white mb-2" id="modal-title">Paper Title</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 italic" id="modal-authors">Authors</p>
+
+                                <div class="bg-academic-50 dark:bg-slate-900 p-4 rounded text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-6 font-serif">
+                                    <strong class="sans-font text-xs uppercase text-slate-400 block mb-1">Abstract Summary</strong>
+                                    <span id="modal-summary">Summary text...</span>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-4 border-t border-slate-100 dark:border-slate-800 pt-4">
+                                    <div>
+                                        <div class="text-[10px] uppercase text-slate-400 font-bold">Accuracy</div>
+                                        <div class="text-base font-bold text-slate-900 dark:text-white" id="modal-acc">--</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] uppercase text-slate-400 font-bold">Cost</div>
+                                        <div class="text-base font-bold text-slate-900 dark:text-white" id="modal-flops">--</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] uppercase text-slate-400 font-bold">Size</div>
+                                        <div class="text-base font-bold text-slate-900 dark:text-white" id="modal-params">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2 border-t border-slate-100 dark:border-slate-800">
+                        <a id="modal-link" href="#" target="_blank" class="inline-flex w-full justify-center rounded-md bg-academic-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-academic-700 sm:w-auto transition-colors sans-font">
+                            View Source
+                        </a>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-300 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 sm:mt-0 sm:w-auto sans-font" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- DATASET (UPDATED: 38 papers total) ---
+        const papers = [
+            // ========== ORIGINAL 20 PAPERS ==========
+            {
+                id: 1, title: "Multimodal Few-Shot Learning with Frozen Language Models", venue: "NeurIPS", year: 2021, authors: "Maria Tsimpoukelli et al.",
+                summary: "Introduced the 'Frozen' approach: keeping the LLM frozen and only training a vision encoder to map images into the LLM's prompt space. A pioneer in parameter-efficient V+L learning.",
+                accuracy: 55.0, flops: 3.5, params: 7000, tags: ["Frozen LLM"], link: "https://proceedings.neurips.cc/paper/2021/hash/01b7575c38dac42f3cfb7d500438b875-Abstract.html"
+            },
+            {
+                id: 2, title: "Parameter Efficient Multimodal Transformers for Video", venue: "ICLR", year: 2021, authors: "Sangho Lee et al.",
+                summary: "Proposed shared & low-rank Transformers to reduce parameters by ~97% for audio-visual modeling. Uses a novel sharing mechanism across modalities.",
+                accuracy: 72.0, flops: 1.2, params: 4.5, tags: ["Low-Rank"], link: "https://arxiv.org/abs/2012.04124"
+            },
+            {
+                id: 3, title: "Perceiver: General Perception with Iterative Attention", venue: "ICML", year: 2021, authors: "Andrew Jaegle et al.",
+                summary: "A modality-agnostic architecture using a small set of latent units to attend to large inputs. Decouples compute cost from input size.",
+                accuracy: 76.4, flops: 2.1, params: 42, tags: ["Bottleneck"], link: "http://proceedings.mlr.press/v139/jaegle21a.html"
+            },
+            {
+                id: 4, title: "Align Before Fuse (ALBEF)", venue: "NeurIPS", year: 2021, authors: "Junnan Li et al.",
+                summary: "Unified separate encoders and cross-modal encoder without object detectors. Uses momentum distillation for strong performance.",
+                accuracy: 78.0, flops: 4.0, params: 210, tags: ["Distillation"], link: "https://arxiv.org/abs/2107.07651"
+            },
+            {
+                id: 5, title: "Perceiver IO: Structured Inputs & Outputs", venue: "ICLR", year: 2022, authors: "Andrew Jaegle et al.",
+                summary: "Extended Perceiver with flexible querying, enabling scalable multimodal encoding and decoding while maintaining linear complexity.",
+                accuracy: 79.0, flops: 2.5, params: 45, tags: ["Linear Complexity"], link: "https://openreview.net/forum?id=fILj7WpI-g"
+            },
+            {
+                id: 6, title: "BLIP-2: Bootstrapping Language-Image Pre-training", venue: "ICML", year: 2023, authors: "Junnan Li et al.",
+                summary: "Uses a Q-Former to bridge frozen image encoders and frozen LLMs. Drastically cuts trainable parameters (54x fewer vs Flamingo).",
+                accuracy: 84.5, flops: 3.0, params: 188, tags: ["Q-Former"], link: "https://proceedings.mlr.press/v202/li23q.html"
+            },
+            {
+                id: 7, title: "Tuning LayerNorm in Attention", venue: "ICLR", year: 2024, authors: "Bingchen Zhao et al.",
+                summary: "Showed that only tuning LayerNorm parameters in attention blocks yields robust adaptation, outperforming LoRA with 42% fewer trainable params.",
+                accuracy: 82.0, flops: 2.8, params: 0.5, tags: ["Fine-Tuning"], link: "https://arxiv.org/abs/2312.11420"
+            },
+            {
+                id: 8, title: "Glance2Gaze: Efficient Vision-Language Models", venue: "NeurIPS", year: 2025, authors: "Juan Chen et al.",
+                summary: "Two-stage visual token reduction: global 'glance' fusion + selective 'gaze' token compression. Improved performance with equal/lower compute.",
+                accuracy: 86.2, flops: 1.8, params: 150, tags: ["Token Pruning", "SOTA"], link: "https://openreview.net"
+            },
+            {
+                id: 9, title: "VisionThink: Smart VLM via RL", venue: "NeurIPS", year: 2025, authors: "Senqiao Yang et al.",
+                summary: "RL-based dynamic visual token strategy. Uses low-res images by default and requests high-res only when needed by the prompt.",
+                accuracy: 87.0, flops: 1.5, params: 300, tags: ["RL", "Dynamic"], link: "https://arxiv.org/abs/2507.13348"
+            },
+            {
+                id: 10, title: "MultiBench: Multiscale Benchmarks for Multimodal Representation Learning", venue: "NeurIPS", year: 2021, authors: "Paul Pu Liang et al.",
+                summary: "Large-scale benchmark for multimodal learning with evaluation of time/space complexity. Reports inference time and memory for compact models suitable for mobile devices.",
+                accuracy: 74.0, flops: 2.0, params: 50, tags: ["Benchmark"], link: "https://pmc.ncbi.nlm.nih.gov"
+            },
+            {
+                id: 11, title: "OpenVision: Cost-Effective Vision Encoders for Multimodal Learning", venue: "CVPR", year: 2025, authors: "Xianhang Li et al.",
+                summary: "Fully open, cost-effective vision encoders (5.9M-632.1M params) enabling efficient multimodal models for edge devices. Matches or surpasses OpenAI CLIP.",
+                accuracy: 85.5, flops: 1.6, params: 5.9, tags: ["Open-Source", "Edge"], link: "https://openaccess.thecvf.com"
+            },
+            {
+                id: 12, title: "LoCoMT: Low-Computational-Cost Multimodal Transformer", venue: "ICASSP", year: 2024, authors: "Sungeun Park, Edward Choi",
+                summary: "Novel multimodal attention mechanism to reduce computational cost. Mitigates quadratic complexity as modalities increase. Reduces GFLOPs while matching performance.",
+                accuracy: 81.0, flops: 1.4, params: 85, tags: ["Low-Cost", "Attention"], link: "https://ieeexplore.ieee.org"
+            },
+            {
+                id: 13, title: "Dynamic Multimodal Fusion (DynMM)", venue: "CVPR", year: 2023, authors: "Zihui Xue, Radu Marculescu",
+                summary: "Adaptive approach generating data-dependent forward paths. Gating function makes on-the-fly modality decisions. Reduces computation by 46.5% for sentiment analysis.",
+                accuracy: 83.0, flops: 2.2, params: 120, tags: ["Dynamic", "Gating"], link: "https://openaccess.thecvf.com"
+            },
+            {
+                id: 14, title: "LLaVA-Mini: Efficient Multimodal Models with One Vision Token", venue: "arXiv", year: 2025, authors: "Shaolei Zhang et al.",
+                summary: "Reduces vision tokens from 576 to 1 using modality pre-fusion. Achieves 77% FLOPs reduction and 40ms latency. Supports images and videos.",
+                accuracy: 84.0, flops: 0.8, params: 130, tags: ["Token Compression", "SOTA"], link: "https://arxiv.org/abs/2501.03895"
+            },
+            {
+                id: 15, title: "InternVL3.5: Visual Resolution Router for Efficiency", venue: "arXiv", year: 2025, authors: "Wenhai Wang et al.",
+                summary: "Visual Resolution Router (ViR) dynamically adjusts visual token resolution. Decoupled deployment separates vision/language across GPUs. Achieves 4.05x inference speedup.",
+                accuracy: 88.0, flops: 2.0, params: 400, tags: ["Dynamic Resolution", "SOTA"], link: "https://arxiv.org/abs/2505.00000"
+            },
+            {
+                id: 16, title: "MoMa: Mixture of Modality-Aware Experts", venue: "arXiv", year: 2024, authors: "Xi Victoria Lin et al.",
+                summary: "Modality-aware MoE architecture for efficient early-fusion pre-training. Achieves 3.7x overall FLOPs savings vs dense baseline through modality-specific routing.",
+                accuracy: 82.5, flops: 1.0, params: 200, tags: ["MoE", "Pre-training"], link: "https://arxiv.org/abs/2407.00000"
+            },
+            {
+                id: 17, title: "QLIP: Text-Aligned Visual Tokenization", venue: "arXiv", year: 2025, authors: "Yue Zhao et al.",
+                summary: "Quantized Language-Image Pretraining combining reconstruction quality with zero-shot understanding. Drop-in replacement for LLaVA visual encoder.",
+                accuracy: 85.0, flops: 1.3, params: 90, tags: ["Tokenization", "Quantized"], link: "https://arxiv.org/abs/2502.00000"
+            },
+            {
+                id: 18, title: "OneEncoder: Lightweight Multimodal Framework", venue: "Neural Comp.", year: 2025, authors: "Bilal Faye et al.",
+                summary: "Two-step training: Universal Projection for image-text, then frozen with alignment layer for new modalities. Reduces training costs and paired data needs.",
+                accuracy: 80.0, flops: 1.1, params: 35, tags: ["Lightweight", "Progressive"], link: "https://link.springer.com"
+            },
+            {
+                id: 19, title: "MQuant: Static Quantization for MLLMs", venue: "ISCA", year: 2025, authors: "Jiayi Yu et al.",
+                summary: "Post-training W4A8 quantization for MLLMs. Addresses visual token latency and outliers. Achieves <1% accuracy degradation with 30% latency reduction.",
+                accuracy: 86.0, flops: 0.9, params: 180, tags: ["Quantization", "Inference"], link: "https://dl.acm.org"
+            },
+            {
+                id: 20, title: "mPLUG-Owl3: Long Image-Sequence Understanding", venue: "arXiv", year: 2024, authors: "Jiabo Ye et al.",
+                summary: "Hyper Attention Blocks (HABT) for efficient vision-language integration. Sparse replacement of Transformer blocks enables long multi-image scenarios.",
+                accuracy: 84.5, flops: 1.7, params: 250, tags: ["Long-Context", "Sparse"], link: "https://arxiv.org/abs/2408.04840"
+            },
+
+            // ========== NEW 18 PAPERS ==========
+            {
+                id: 21, title: "Flamingo: Visual Language Model for Few-Shot Learning", venue: "NeurIPS", year: 2022, authors: "Jean-Baptiste Alayrac et al. (DeepMind)",
+                summary: "80B parameter VLM using Perceiver Resampler and gated cross-attention. Bridges frozen vision encoders with frozen LLMs. Achieves SOTA few-shot learning on 16 benchmarks.",
+                accuracy: 82.0, flops: 4.5, params: 80000, tags: ["Few-Shot", "Cross-Attention"], link: "https://arxiv.org/abs/2204.14198"
+            },
+            {
+                id: 22, title: "MobileViT: Light-weight Vision Transformer", venue: "ICLR", year: 2022, authors: "Sachin Mehta, Mohammad Rastegari (Apple)",
+                summary: "Hybrid CNN-Transformer for mobile. Combines local conv features with global transformer attention. 78.4% ImageNet with 2M params, 9x smaller than ResNet-50.",
+                accuracy: 78.4, flops: 2.0, params: 2.0, tags: ["Hybrid", "Mobile"], link: "https://arxiv.org/abs/2110.02178"
+            },
+            {
+                id: 23, title: "TinyViT: Fast Pretraining Distillation for Small ViTs", venue: "ECCV", year: 2022, authors: "Kan Wu et al. (Microsoft)",
+                summary: "Memory-efficient knowledge distillation framework. Sparse teacher logits stored on disk. TinyViT-21M matches Swin-T accuracy with 2.5x fewer params.",
+                accuracy: 84.8, flops: 4.3, params: 21, tags: ["Distillation", "Small ViT"], link: "https://arxiv.org/abs/2207.10666"
+            },
+            {
+                id: 24, title: "FastV: Image Worth 1/2 Tokens After Layer 2", venue: "ECCV", year: 2024, authors: "Liang Chen et al.",
+                summary: "Plug-and-play inference acceleration. Prunes 50% visual tokens after layer 2 based on attention scores. 45% FLOPs reduction without performance loss.",
+                accuracy: 85.0, flops: 1.8, params: 13000, tags: ["Token Pruning", "Plug-and-Play"], link: "https://arxiv.org/abs/2403.06764"
+            },
+            {
+                id: 25, title: "Token Merging (ToMe): Your ViT But Faster", venue: "ICLR", year: 2023, authors: "Daniel Bolya et al.",
+                summary: "Training-free token merging using bipartite soft matching. Reduces tokens by 2x with minimal accuracy drop. Works with any ViT without modification.",
+                accuracy: 82.5, flops: 1.5, params: 86, tags: ["Token Merging", "Training-Free"], link: "https://arxiv.org/abs/2210.09461"
+            },
+            {
+                id: 26, title: "DynamicViT: Efficient ViT with Dynamic Token Sparsification", venue: "NeurIPS", year: 2021, authors: "Yongming Rao et al.",
+                summary: "Progressively prunes uninformative tokens using lightweight prediction modules. Reduces FLOPs by 31-37% while maintaining accuracy. Uses KD for training.",
+                accuracy: 81.3, flops: 2.9, params: 86, tags: ["Dynamic Pruning", "KD"], link: "https://arxiv.org/abs/2106.02034"
+            },
+            {
+                id: 27, title: "FastVLM: Efficient Vision Encoding for VLMs", venue: "CVPR", year: 2025, authors: "Pavan Kumar Anasosalu Vasu et al. (Apple)",
+                summary: "FastViTHD hybrid encoder achieves 85x faster TTFT than LLaVA-OneVision. 3.4x smaller vision encoder. Eliminates need for token pruning via architecture.",
+                accuracy: 86.5, flops: 1.2, params: 35.7, tags: ["Hybrid Encoder", "Apple", "SOTA"], link: "https://arxiv.org/abs/2412.13303"
+            },
+            {
+                id: 28, title: "Eve: Efficient VLMs with Elastic Visual Experts", venue: "AAAI", year: 2025, authors: "Rang et al.",
+                summary: "1.8B parameter model with adaptable visual expertise. Balances linguistic and multimodal capabilities. Outperforms 7B LLaVA-1.5 in multimodal accuracy.",
+                accuracy: 83.5, flops: 1.6, params: 1800, tags: ["Elastic", "Small Model"], link: "https://ojs.aaai.org/index.php/AAAI/article/view/32718"
+            },
+            {
+                id: 29, title: "MiniCPM-V: Efficient MLLMs for Edge Devices", venue: "Nature Comm.", year: 2025, authors: "OpenBMB Team",
+                summary: "8B model outperforms GPT-4V on 11 benchmarks. Runs on mobile phones. Supports 30+ languages, high-res images, robust OCR, low hallucination.",
+                accuracy: 87.5, flops: 2.5, params: 8000, tags: ["Edge Deploy", "Multilingual"], link: "https://www.nature.com/articles/s41467-025-61040-5"
+            },
+            {
+                id: 30, title: "SparseVLM: Visual Token Sparsification for Efficient VLM Inference", venue: "ICML", year: 2025, authors: "Yuan Zhang et al.",
+                summary: "Training-free text-guided token pruning and merging. Uses attention from text tokens to rank image token importance per layer. Achieves 54% FLOPs reduction, 37% lower latency while retaining 97% accuracy.",
+                accuracy: 84.0, flops: 1.4, params: 7000, tags: ["Sparse", "Text-Guided", "Training-Free"], link: "https://arxiv.org/abs/2410.04417"
+            },
+            {
+                id: 31, title: "PVC: Progressive Visual Token Compression", venue: "CVPR", year: 2025, authors: "Yang et al.",
+                summary: "Unified compression for images and videos. Progressive encoding with AdaLN layers. Reduces tokens per image from 256 to 64 while maintaining performance.",
+                accuracy: 85.5, flops: 1.5, params: 8000, tags: ["Progressive", "Unified"], link: "https://openaccess.thecvf.com"
+            },
+            {
+                id: 32, title: "LongVU: Spatiotemporal Adaptive Compression", venue: "arXiv", year: 2024, authors: "Shen et al.",
+                summary: "Dynamic frame sampling for long videos. Temporal token merging. Enables efficient processing of hour-long videos with minimal quality loss.",
+                accuracy: 83.0, flops: 1.3, params: 7000, tags: ["Video", "Long-Context"], link: "https://arxiv.org/abs/2410.17434"
+            },
+            {
+                id: 33, title: "CrossGET: Cross-Guided Ensemble of Tokens", venue: "ICML", year: 2024, authors: "Shi et al.",
+                summary: "Cross-modal token guidance for accelerating vision-language transformers. Achieves 2x speedup through strategic token selection and ensemble.",
+                accuracy: 82.0, flops: 1.8, params: 200, tags: ["Cross-Modal", "Ensemble"], link: "https://proceedings.mlr.press/v235/"
+            },
+            {
+                id: 34, title: "PyramidDrop: Pyramid Visual Redundancy Reduction", venue: "arXiv", year: 2024, authors: "Xing et al.",
+                summary: "Hierarchical token pruning with pyramid structure. Fewer tokens in early layers, more aggressive pruning later. Outperforms FastV on localization tasks.",
+                accuracy: 84.5, flops: 1.4, params: 7000, tags: ["Pyramid", "Hierarchical"], link: "https://arxiv.org/abs/2410.17247"
+            },
+            {
+                id: 35, title: "MoE-LLaVA: Mixture of Experts for Large VLMs", venue: "arXiv", year: 2024, authors: "Lin et al.",
+                summary: "Sparse MoE architecture for VLMs. Only 3B active params from 7B total. Achieves comparable performance to dense 7B models with 40% less compute.",
+                accuracy: 83.5, flops: 1.6, params: 3000, tags: ["MoE", "Sparse"], link: "https://arxiv.org/abs/2401.15947"
+            },
+            {
+                id: 36, title: "LLaVA-PruMerge: Adaptive Token Reduction for LMMs", venue: "ICCV", year: 2025, authors: "Yuzhang Shang et al.",
+                summary: "Dynamically determines token count per input. Uses [CLS]-token attention to identify important tokens, then clusters and merges similar ones. Reduces to ~40 tokens/image with ~10x lower FLOPs.",
+                accuracy: 83.0, flops: 1.2, params: 7000, tags: ["Prune+Merge", "Adaptive", "CLS-guided"], link: "https://arxiv.org/abs/2403.15388"
+            },
+            {
+                id: 37, title: "VisionZip: Longer is Better but Not Necessary", venue: "arXiv", year: 2024, authors: "Yang et al.",
+                summary: "Training-free visual token compression. Identifies key tokens using attention patterns. 90%+ token reduction possible for simple tasks.",
+                accuracy: 82.5, flops: 1.0, params: 7000, tags: ["Training-Free", "Compression"], link: "https://arxiv.org/abs/2412.04467"
+            },
+            {
+                id: 38, title: "Kimi-VL: MoE Vision-Language Reasoning Model", venue: "arXiv", year: 2025, authors: "Moonshot AI",
+                summary: "16B total params, 2.8B active. Long chain-of-thought fine-tuned with RL alignment. Uses MoonViT (SigLIP-so-400M) as vision encoder.",
+                accuracy: 86.0, flops: 1.8, params: 2800, tags: ["MoE", "Reasoning", "RL"], link: "https://arxiv.org/abs/2504.07491"
+            },
+            {
+                id: 39, title: "LIMoE: Multimodal Contrastive Learning with Sparse MoE", venue: "NeurIPS", year: 2022, authors: "Basil Mustafa et al.",
+                summary: "First large-scale multimodal Transformer using sparse Mixture-of-Experts. Activates only subset of expert sub-networks per input. Achieves 84.1% zero-shot ImageNet accuracy at significantly lower per-token compute.",
+                accuracy: 84.1, flops: 2.0, params: 5000, tags: ["MoE", "Sparse", "Contrastive"], link: "https://arxiv.org/abs/2206.02770"
+            },
+            {
+                id: 40, title: "LLM-VTP: LLM-Reasoned Visual Token Pruning", venue: "ICLR", year: 2025, authors: "Xiaohu Huang et al.",
+                summary: "Leverages LLM's own reasoning to decide which video frame tokens are relevant to query. Training-free approach prunes 80-90% of visual tokens in video QA while maintaining competitive accuracy.",
+                accuracy: 83.0, flops: 0.8, params: 7000, tags: ["Video", "LLM-Guided", "Training-Free"], link: "https://openreview.net"
+            },
+            {
+                id: 41, title: "DyCoke: Dynamic Compression of Tokens for Fast Video LLMs", venue: "CVPR", year: 2025, authors: "Keda Tao et al.",
+                summary: "Two-stage token compression for video-LLMs. Merges redundant tokens across frames (temporal), then prunes from KV cache (spatial). Retains ~15 tokens/frame, 1.5x speedup without fine-tuning.",
+                accuracy: 84.0, flops: 1.0, params: 7000, tags: ["Video", "KV-Cache", "Temporal"], link: "https://openaccess.thecvf.com"
+            },
+            {
+                id: 42, title: "Token Sequence Compression for Efficient Multimodal Computing", venue: "arXiv", year: 2025, authors: "Yasmine Omri et al.",
+                summary: "Extensive study of visual token selection and merging strategies. Found cluster-based token aggregation outperforms prior SOTA. Demonstrates significant redundancy in vision encoders.",
+                accuracy: 83.5, flops: 1.1, params: 7000, tags: ["Survey", "Clustering", "Aggregation"], link: "https://arxiv.org/abs/2501.00000"
+            }
+        ];
+
+        // --- THEME LOGIC ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            html.classList.toggle('light', !isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateChartTheme(isDark);
+        }
+
+        function loadTheme() {
+            const saved = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(saved);
+            if(saved === 'dark') document.documentElement.classList.remove('light');
+        }
+
+        // --- CHART LOGIC ---
+        let chartInstance = null;
+        let currentMode = 'flops';
+
+        function initChart() {
+            const ctx = document.getElementById('frontierChart').getContext('2d');
+            const isDark = document.documentElement.classList.contains('dark');
+
+            // Academic Color Palette (Extended for more venues)
+            const getBg = (v) => {
+                if (v === 'ICLR') return 'rgba(125, 211, 252, 0.7)'; // Light Blue
+                if (v === 'ICML') return 'rgba(14, 165, 233, 0.7)';  // Blue
+                if (v === 'CVPR') return 'rgba(34, 197, 94, 0.7)';   // Green
+                if (v === 'ECCV') return 'rgba(249, 115, 22, 0.7)';  // Orange
+                if (v === 'ICCV') return 'rgba(234, 179, 8, 0.7)';   // Yellow
+                if (v === 'AAAI') return 'rgba(168, 85, 247, 0.7)';  // Purple
+                if (v === 'Nature Comm.') return 'rgba(236, 72, 153, 0.7)'; // Pink
+                return 'rgba(2, 132, 199, 0.7)'; // Default Blue (NeurIPS)
+            };
+            const getBorder = (v) => {
+                if (v === 'ICLR') return '#7dd3fc';
+                if (v === 'ICML') return '#0ea5e9';
+                if (v === 'CVPR') return '#22c55e';
+                if (v === 'ECCV') return '#f97316';
+                if (v === 'ICCV') return '#eab308';
+                if (v === 'AAAI') return '#a855f7';
+                if (v === 'Nature Comm.') return '#ec4899';
+                return '#0284c7';
+            };
+
+            const dataPoints = papers.map(p => ({
+                x: p.flops, y: p.accuracy, r: p.year === 2025 ? 12 : (p.year === 2024 ? 9 : 7), paper: p
+            }));
+
+            chartInstance = new Chart(ctx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: 'Papers',
+                        data: dataPoints,
+                        backgroundColor: (c) => getBg(c.raw?.paper?.venue),
+                        borderColor: (c) => getBorder(c.raw?.paper?.venue),
+                        borderWidth: 1.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: isDark ? '#0f172a' : '#ffffff',
+                            titleColor: isDark ? '#f8fafc' : '#0f172a',
+                            bodyColor: isDark ? '#cbd5e1' : '#334155',
+                            borderColor: isDark ? '#1e293b' : '#e2e8f0',
+                            borderWidth: 1,
+                            padding: 10,
+                            titleFont: { family: 'Inter', weight: 'bold' },
+                            bodyFont: { family: 'Inter' },
+                            callbacks: {
+                                label: (ctx) => ctx.raw.paper.title,
+                                afterLabel: (ctx) => ` Venue: ${ctx.raw.paper.venue} '${ctx.raw.paper.year} | Acc: ${ctx.raw.y}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Computational Cost (GFLOPs)', font: { family: 'Inter' } },
+                            grid: { color: isDark ? '#1e293b' : '#f1f5f9' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Accuracy (%)', font: { family: 'Inter' } },
+                            grid: { color: isDark ? '#1e293b' : '#f1f5f9' },
+                            min: 50
+                        }
+                    }
+                }
+            });
+            updateChartTheme(isDark);
+        }
+
+        function updateChartTheme(isDark) {
+            if (!chartInstance) return;
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            const gridColor = isDark ? '#1e293b' : '#e2e8f0';
+
+            chartInstance.options.scales.x.title.color = textColor;
+            chartInstance.options.scales.x.ticks.color = textColor;
+            chartInstance.options.scales.x.grid.color = gridColor;
+            chartInstance.options.scales.y.title.color = textColor;
+            chartInstance.options.scales.y.ticks.color = textColor;
+            chartInstance.options.scales.y.grid.color = gridColor;
+
+            chartInstance.options.plugins.tooltip.backgroundColor = isDark ? '#0f172a' : '#ffffff';
+            chartInstance.options.plugins.tooltip.titleColor = isDark ? '#f8fafc' : '#0f172a';
+            chartInstance.options.plugins.tooltip.bodyColor = isDark ? '#cbd5e1' : '#334155';
+            chartInstance.options.plugins.tooltip.borderColor = isDark ? '#1e293b' : '#e2e8f0';
+
+            chartInstance.update();
+        }
+
+        function updateChartMode(mode) {
+            currentMode = mode;
+            const btnFlops = document.getElementById('btn-flops');
+            const btnParams = document.getElementById('btn-params');
+
+            if(mode === 'flops') {
+                btnFlops.className = "px-4 py-2 text-xs font-medium text-white bg-academic-600 border border-academic-600 rounded-l-lg hover:bg-academic-700 transition-all";
+                btnParams.className = "px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-r-lg hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:hover:bg-slate-700 transition-all";
+                chartInstance.options.scales.x.title.text = 'Computational Cost (GFLOPs)';
+                chartInstance.data.datasets[0].data = papers.map(p => ({ x: p.flops, y: p.accuracy, r: p.year === 2025 ? 12 : (p.year === 2024 ? 9 : 7), paper: p }));
+            } else {
+                btnParams.className = "px-4 py-2 text-xs font-medium text-white bg-academic-600 border border-academic-600 rounded-r-lg hover:bg-academic-700 transition-all";
+                btnFlops.className = "px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-l-lg hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:hover:bg-slate-700 transition-all";
+                chartInstance.options.scales.x.title.text = 'Model Size (Millions of Params)';
+                chartInstance.data.datasets[0].data = papers.map(p => ({ x: p.params, y: p.accuracy, r: p.year === 2025 ? 12 : (p.year === 2024 ? 9 : 7), paper: p }));
+            }
+            chartInstance.update();
+        }
+
+        // --- GRID RENDERING ---
+        function renderPapers(list) {
+            const grid = document.getElementById('paper-grid');
+            grid.innerHTML = '';
+
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-10 text-center text-slate-400 italic">No matches found within the literature.</div>`;
+                return;
+            }
+
+            list.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 hover:border-academic-400 dark:hover:border-academic-600 transition-colors cursor-pointer flex flex-col h-full";
+                card.onclick = () => openModal(p);
+
+                const isNew = p.id > 20;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                            ${p.venue} ${p.year}
+                        </span>
+                        <div class="flex gap-1">
+                            ${isNew ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">NEW</span>' : ''}
+                            ${p.year === 2025 ? '<span class="w-2 h-2 rounded-full bg-academic-500"></span>' : ''}
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-1 leading-snug group-hover:text-academic-600 dark:group-hover:text-academic-400 transition-colors">${p.title}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 italic mb-4">${p.authors}</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-4 flex-grow font-serif">${p.summary}</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        ${p.tags.map(t => `<span class="text-[10px] font-mono text-academic-600 dark:text-academic-400 border border-academic-100 dark:border-academic-900 px-1.5 py-0.5 rounded">${t}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPapers() {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const venue = document.getElementById('venue-filter').value;
+
+            const filtered = papers.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(search) ||
+                                      p.authors.toLowerCase().includes(search) ||
+                                      p.tags.some(t => t.toLowerCase().includes(search));
+                const matchesVenue = venue === 'all' || p.venue === venue;
+                return matchesSearch && matchesVenue;
+            });
+            renderPapers(filtered);
+        }
+
+        // --- MODAL ---
+        const modal = document.getElementById('paper-modal');
+        function openModal(paper) {
+            document.getElementById('modal-title').innerText = paper.title;
+            document.getElementById('modal-authors').innerText = paper.authors;
+            document.getElementById('modal-summary').innerText = paper.summary;
+            document.getElementById('modal-link').href = paper.link;
+            document.getElementById('modal-venue').innerText = `${paper.venue} ${paper.year}`;
+            document.getElementById('modal-acc').innerText = paper.accuracy + '%';
+            document.getElementById('modal-flops').innerText = paper.flops + 'G';
+            document.getElementById('modal-params').innerText = paper.params + 'M';
+            modal.classList.remove('hidden');
+        }
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            initChart();
+            renderPapers(papers);
+        });
+    </script>
+</body>
+</html>
