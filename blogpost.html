@@ -60,6 +60,17 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 4px; }
+        /* View transitions */
+        .view { display: none; }
+        .view.active { display: block; }
+        /* Methodology cards hover */
+        .methodology-card { cursor: pointer; transition: all 0.2s; }
+        .methodology-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15); }
+        /* PDF drop zone */
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.2s; }
+        .drop-zone.dragover { border-color: #0284c7; background: rgba(2, 132, 199, 0.05); }
+        .dark .drop-zone { border-color: #475569; }
+        .dark .drop-zone.dragover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.1); }
     </style>
 </head>
 <body class="bg-white text-slate-800 dark:bg-academic-950 dark:text-slate-300 transition-colors duration-300 antialiased leading-relaxed">
@@ -109,6 +120,9 @@
 
     <!-- Main Article Container -->
     <main class="max-w-4xl mx-auto px-6 py-16">
+
+    <!-- View: Main Blog -->
+    <div id="view-main" class="view active">
 
         <!-- Article Header -->
         <header class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-12">
@@ -203,30 +217,59 @@
         <!-- Section 3: Methodology Breakdown -->
         <section class="mb-20">
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 sans-font">3. Methodological Categorization</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm">Click on a category to explore papers using that methodology.</p>
             <div class="grid md:grid-cols-2 gap-8 sans-font">
-                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
-                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Frozen Foundations</h3>
+                <div onclick="navigateTo('methodology/frozen-foundations')" class="methodology-card bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-academic-400 dark:hover:border-academic-600">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fas fa-snowflake text-academic-500"></i>
+                        <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400">Frozen Foundations</h3>
+                    </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Methods like <strong>BLIP-2</strong>, <strong>Frozen</strong>, and <strong>Flamingo</strong> leverage pre-trained LLMs without updating their weights. They introduce lightweight bridging modules (e.g., Q-Former, Perceiver Resampler) to align visual features, drastically reducing training costs.
                     </p>
+                    <div class="mt-3 flex items-center gap-2 text-xs text-academic-600 dark:text-academic-400">
+                        <span>View papers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </div>
-                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
-                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Dynamic Computation</h3>
+                <div onclick="navigateTo('methodology/dynamic-computation')" class="methodology-card bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-academic-400 dark:hover:border-academic-600">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fas fa-bolt text-academic-500"></i>
+                        <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400">Dynamic Computation</h3>
+                    </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Recent works like <strong>VisionThink (2025)</strong> and <strong>FastV (2024)</strong> utilize RL or attention-based methods to dynamically adjust the visual token budget based on complexity, departing from static architectural pruning.
                     </p>
+                    <div class="mt-3 flex items-center gap-2 text-xs text-academic-600 dark:text-academic-400">
+                        <span>View papers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </div>
-                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
-                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Hybrid Architectures</h3>
+                <div onclick="navigateTo('methodology/hybrid-architectures')" class="methodology-card bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-academic-400 dark:hover:border-academic-600">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fas fa-layer-group text-academic-500"></i>
+                        <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400">Hybrid Architectures</h3>
+                    </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         <strong>MobileViT</strong>, <strong>FastVLM</strong>, and <strong>TinyViT</strong> combine the local feature extraction of CNNs with global attention of Transformers, achieving mobile-friendly efficiency without sacrificing accuracy.
                     </p>
+                    <div class="mt-3 flex items-center gap-2 text-xs text-academic-600 dark:text-academic-400">
+                        <span>View papers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </div>
-                <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800">
-                    <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400 mb-2">Token Compression</h3>
+                <div onclick="navigateTo('methodology/token-compression')" class="methodology-card bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-academic-400 dark:hover:border-academic-600">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fas fa-compress-alt text-academic-500"></i>
+                        <h3 class="font-bold text-lg text-academic-700 dark:text-academic-400">Token Compression</h3>
+                    </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         <strong>ToMe</strong>, <strong>SparseVLM</strong>, and <strong>LLaVA-Mini</strong> reduce visual tokens via merging, pruning, or compression. These methods achieve 50-77% FLOPs reduction while maintaining task performance.
                     </p>
+                    <div class="mt-3 flex items-center gap-2 text-xs text-academic-600 dark:text-academic-400">
+                        <span>View papers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </div>
             </div>
         </section>
@@ -285,6 +328,194 @@
             <p class="mb-2">&copy; Last Updated: 06/01/2026 Aneek Roy. All rights reserved.</p>
         </footer>
 
+    </div><!-- End View: Main Blog -->
+
+    <!-- View: Methodology Page -->
+    <div id="view-methodology" class="view">
+        <!-- Breadcrumb -->
+        <nav class="mb-8 sans-font">
+            <ol class="flex items-center gap-2 text-sm">
+                <li><a href="#" onclick="navigateTo(''); return false;" class="text-academic-600 dark:text-academic-400 hover:underline">Home</a></li>
+                <li class="text-slate-400">/</li>
+                <li id="methodology-breadcrumb" class="text-slate-600 dark:text-slate-400">Methodology</li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <header class="mb-10">
+            <div class="flex items-center gap-4 mb-4">
+                <div id="methodology-icon" class="w-12 h-12 rounded-xl bg-academic-100 dark:bg-academic-900 flex items-center justify-center text-academic-600 dark:text-academic-400 text-xl">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div>
+                    <h1 id="methodology-title" class="text-3xl font-bold text-slate-900 dark:text-white">Methodology</h1>
+                    <p id="methodology-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1">Papers using this approach</p>
+                </div>
+            </div>
+            <p id="methodology-description" class="text-slate-600 dark:text-slate-400 leading-relaxed"></p>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 mb-10 sans-font">
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="methodology-count" class="text-2xl font-bold text-academic-600 dark:text-academic-400">0</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">Papers</div>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="methodology-avg-acc" class="text-2xl font-bold text-academic-600 dark:text-academic-400">0%</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">Avg Accuracy</div>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="methodology-avg-flops" class="text-2xl font-bold text-academic-600 dark:text-academic-400">0G</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">Avg FLOPs</div>
+            </div>
+        </div>
+
+        <!-- Paper Grid -->
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 sans-font">Papers in this category</h2>
+        <div id="methodology-paper-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 sans-font">
+            <!-- Injected via JS -->
+        </div>
+
+        <!-- Back button -->
+        <div class="mt-12 text-center">
+            <button onclick="navigateTo('')" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors sans-font text-sm">
+                <i class="fas fa-arrow-left"></i>
+                Back to Blog
+            </button>
+        </div>
+    </div><!-- End View: Methodology -->
+
+    <!-- View: Paper Detail Page -->
+    <div id="view-paper" class="view">
+        <!-- Breadcrumb -->
+        <nav class="mb-8 sans-font">
+            <ol class="flex items-center gap-2 text-sm">
+                <li><a href="#" onclick="navigateTo(''); return false;" class="text-academic-600 dark:text-academic-400 hover:underline">Home</a></li>
+                <li class="text-slate-400">/</li>
+                <li><a href="#" id="paper-methodology-link" class="text-academic-600 dark:text-academic-400 hover:underline">Methodology</a></li>
+                <li class="text-slate-400">/</li>
+                <li id="paper-breadcrumb" class="text-slate-600 dark:text-slate-400 truncate max-w-xs">Paper</li>
+            </ol>
+        </nav>
+
+        <!-- Paper Header -->
+        <header class="mb-10">
+            <div class="flex items-center gap-3 mb-4">
+                <span id="paper-venue-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-academic-100 text-academic-700 dark:bg-academic-900 dark:text-academic-400">
+                    Venue 2024
+                </span>
+                <span id="paper-year-dot" class="w-3 h-3 rounded-full bg-academic-500 hidden"></span>
+            </div>
+            <h1 id="paper-title" class="text-3xl font-bold text-slate-900 dark:text-white mb-3 leading-tight">Paper Title</h1>
+            <p id="paper-authors" class="text-slate-500 dark:text-slate-400 italic">Authors</p>
+        </header>
+
+        <!-- Metrics -->
+        <div class="grid grid-cols-3 gap-4 mb-10 sans-font">
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="paper-accuracy" class="text-2xl font-bold text-academic-600 dark:text-academic-400">--</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">Accuracy</div>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="paper-flops" class="text-2xl font-bold text-academic-600 dark:text-academic-400">--</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">FLOPs</div>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+                <div id="paper-params" class="text-2xl font-bold text-academic-600 dark:text-academic-400">--</div>
+                <div class="text-xs text-slate-500 uppercase font-medium mt-1">Parameters</div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-file-alt text-academic-500"></i>
+                Summary
+            </h2>
+            <div class="bg-academic-50 dark:bg-academic-900/20 p-6 rounded-lg border-l-4 border-academic-500">
+                <p id="paper-summary" class="text-slate-700 dark:text-slate-300 leading-relaxed">Summary text...</p>
+            </div>
+        </section>
+
+        <!-- Methodology Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-cogs text-academic-500"></i>
+                Methodology
+            </h2>
+            <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <p id="paper-methodology-detail" class="text-slate-600 dark:text-slate-400 leading-relaxed">Methodology details...</p>
+            </div>
+        </section>
+
+        <!-- Future Directions Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-lightbulb text-academic-500"></i>
+                Future Directions
+            </h2>
+            <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <p id="paper-future-directions" class="text-slate-600 dark:text-slate-400 leading-relaxed">Future research directions...</p>
+            </div>
+        </section>
+
+        <!-- Tags -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-tags text-academic-500"></i>
+                Keywords
+            </h2>
+            <div id="paper-tags" class="flex flex-wrap gap-2 sans-font">
+                <!-- Tags injected via JS -->
+            </div>
+        </section>
+
+        <!-- Annotated PDF Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-file-pdf text-academic-500"></i>
+                Annotated PDF
+            </h2>
+            <div id="paper-pdf-section" class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <div id="paper-pdf-placeholder" class="text-center">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 dark:text-slate-600 mb-4"></i>
+                    <p class="text-slate-500 dark:text-slate-400 mb-4">No annotated PDF uploaded yet.</p>
+                    <button onclick="openPdfUploadModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm">
+                        <i class="fas fa-upload"></i>
+                        Upload Annotated PDF
+                    </button>
+                </div>
+                <div id="paper-pdf-uploaded" class="hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-file-pdf text-3xl text-red-500"></i>
+                            <div>
+                                <p class="font-medium text-slate-900 dark:text-white sans-font">Annotated PDF</p>
+                                <a id="paper-pdf-link" href="#" target="_blank" class="text-sm text-academic-600 dark:text-academic-400 hover:underline">View on GitHub</a>
+                            </div>
+                        </div>
+                        <button onclick="openPdfUploadModal()" class="text-sm text-slate-500 hover:text-academic-600 dark:hover:text-academic-400 transition-colors">
+                            <i class="fas fa-sync-alt"></i> Replace
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-4 mb-12 sans-font">
+            <a id="paper-source-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors">
+                <i class="fas fa-external-link-alt"></i>
+                View Paper
+            </a>
+            <button onclick="history.back()" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+        </div>
+    </div><!-- End View: Paper Detail -->
+
     </main>
 
     <!-- Modal for Paper Details -->
@@ -327,12 +558,203 @@
                     </div>
                     <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2 border-t border-slate-100 dark:border-slate-800">
                         <a id="modal-link" href="#" target="_blank" class="inline-flex w-full justify-center rounded-md bg-academic-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-academic-700 sm:w-auto transition-colors sans-font">
-                            View Source
+                            <i class="fas fa-external-link-alt mr-2"></i> View Source
                         </a>
+                        <button type="button" id="modal-details-btn" class="mt-3 inline-flex w-full justify-center rounded-md bg-slate-700 dark:bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 dark:hover:bg-slate-500 sm:mt-0 sm:w-auto transition-colors sans-font">
+                            <i class="fas fa-file-alt mr-2"></i> View Details
+                        </button>
                         <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-300 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 sm:mt-0 sm:w-auto sans-font" onclick="closeModal()">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- GitHub OAuth Modal -->
+    <div id="github-oauth-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeGitHubModal()"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-academic-950 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-200 dark:border-slate-800">
+                    <div class="bg-white dark:bg-academic-950 px-6 py-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white sans-font flex items-center gap-2">
+                                <i class="fab fa-github"></i>
+                                GitHub Authentication
+                            </h3>
+                            <button onclick="closeGitHubModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <!-- Step 1: Initial State -->
+                        <div id="oauth-step-1" class="oauth-step">
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed">
+                                To upload annotated PDFs, you need to authenticate with GitHub. This uses the Device Flow for secure authentication.
+                            </p>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
+                                <p class="text-xs text-slate-500 mb-2 font-medium uppercase">Required Setup</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    Enter your GitHub OAuth App Client ID below. You can create one at
+                                    <a href="https://github.com/settings/developers" target="_blank" class="text-academic-600 dark:text-academic-400 hover:underline">GitHub Developer Settings</a>.
+                                </p>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 sans-font">Client ID</label>
+                                <input type="text" id="github-client-id" placeholder="Ov23li..."
+                                    class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-academic-500 focus:border-academic-500 outline-none transition-colors dark:text-white font-mono">
+                            </div>
+                            <button onclick="startGitHubAuth()" class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium">
+                                Start Authentication
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Device Code -->
+                        <div id="oauth-step-2" class="oauth-step hidden">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 rounded-full bg-academic-100 dark:bg-academic-900 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-key text-2xl text-academic-600 dark:text-academic-400"></i>
+                                </div>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">
+                                    Go to <a href="https://github.com/login/device" target="_blank" class="text-academic-600 dark:text-academic-400 font-medium hover:underline">github.com/login/device</a> and enter:
+                                </p>
+                            </div>
+                            <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-lg text-center mb-6">
+                                <p id="github-user-code" class="text-3xl font-mono font-bold text-slate-900 dark:text-white tracking-widest">XXXX-XXXX</p>
+                            </div>
+                            <div class="flex items-center justify-center gap-2 text-sm text-slate-500 mb-6">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Waiting for authorization...</span>
+                            </div>
+                            <button onclick="cancelGitHubAuth()" class="w-full py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors sans-font text-sm">
+                                Cancel
+                            </button>
+                        </div>
+
+                        <!-- Step 3: Success -->
+                        <div id="oauth-step-3" class="oauth-step hidden">
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-check text-2xl text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2 sans-font">Authenticated!</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">You can now upload annotated PDFs.</p>
+                                <button onclick="closeGitHubModal()" class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error State -->
+                        <div id="oauth-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                            <p class="text-sm text-red-600 dark:text-red-400" id="oauth-error-text">An error occurred.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Upload Modal -->
+    <div id="pdf-upload-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closePdfUploadModal()"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-academic-950 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-200 dark:border-slate-800">
+                    <div class="bg-white dark:bg-academic-950 px-6 py-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white sans-font flex items-center gap-2">
+                                <i class="fas fa-file-pdf text-red-500"></i>
+                                Upload Annotated PDF
+                            </h3>
+                            <button onclick="closePdfUploadModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <!-- Upload Step -->
+                        <div id="upload-step-1">
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm">
+                                Upload your annotated PDF for "<span id="upload-paper-title" class="font-medium text-slate-900 dark:text-white">Paper Title</span>".
+                            </p>
+
+                            <!-- Drop Zone -->
+                            <div id="pdf-drop-zone" class="drop-zone rounded-lg p-8 text-center mb-6 cursor-pointer" onclick="document.getElementById('pdf-file-input').click()">
+                                <input type="file" id="pdf-file-input" accept=".pdf" class="hidden" onchange="handleFileSelect(event)">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 dark:text-slate-600 mb-4"></i>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-1">Drag and drop your PDF here</p>
+                                <p class="text-slate-400 text-xs">or click to browse</p>
+                            </div>
+
+                            <!-- Selected File -->
+                            <div id="selected-file-info" class="hidden bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-file-pdf text-2xl text-red-500"></i>
+                                    <div class="flex-grow">
+                                        <p id="selected-file-name" class="font-medium text-slate-900 dark:text-white text-sm sans-font truncate">filename.pdf</p>
+                                        <p id="selected-file-size" class="text-xs text-slate-500">0 KB</p>
+                                    </div>
+                                    <button onclick="clearSelectedFile()" class="text-slate-400 hover:text-red-500">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Repository Config -->
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
+                                <p class="text-xs text-slate-500 mb-3 font-medium uppercase">Repository Settings</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-slate-500 mb-1">Owner</label>
+                                        <input type="text" id="repo-owner" value="aneekroy"
+                                            class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm dark:text-white font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-500 mb-1">Repo</label>
+                                        <input type="text" id="repo-name" value="aneekroy.github.io"
+                                            class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm dark:text-white font-mono">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onclick="uploadPdf()" id="upload-btn" disabled class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                                Upload to GitHub
+                            </button>
+                        </div>
+
+                        <!-- Uploading Step -->
+                        <div id="upload-step-2" class="hidden text-center py-8">
+                            <i class="fas fa-spinner fa-spin text-4xl text-academic-600 dark:text-academic-400 mb-4"></i>
+                            <p class="text-slate-600 dark:text-slate-400">Uploading to GitHub...</p>
+                        </div>
+
+                        <!-- Success Step -->
+                        <div id="upload-step-3" class="hidden text-center py-8">
+                            <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-check text-2xl text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2 sans-font">Upload Successful!</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Your annotated PDF has been uploaded to GitHub.</p>
+                            <button onclick="closePdfUploadModal()" class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium">
+                                Done
+                            </button>
+                        </div>
+
+                        <!-- Error State -->
+                        <div id="upload-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                            <p class="text-sm text-red-600 dark:text-red-400" id="upload-error-text">An error occurred.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 z-[200] hidden">
+        <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 sans-font text-sm">
+            <i id="toast-icon" class="fas fa-check-circle text-green-400 dark:text-green-600"></i>
+            <span id="toast-message">Success!</span>
         </div>
     </div>
 
@@ -645,6 +1067,632 @@
             }
         ];
 
+        // --- METHODOLOGY CATEGORIES ---
+        const methodologyCategories = {
+            'frozen-foundations': {
+                title: 'Frozen Foundations',
+                description: 'These methods leverage pre-trained Large Language Models (LLMs) without updating their weights. They introduce lightweight bridging modules such as Q-Former or Perceiver Resampler to align visual features with the frozen LLM\'s embedding space. This approach drastically reduces training costs while maintaining strong performance.',
+                icon: 'fa-snowflake',
+                tags: ['Frozen LLM', 'Q-Former', 'Cross-Attention', 'Few-Shot', 'Distillation', 'Low-Rank', 'Bottleneck', 'Linear Complexity', 'Fine-Tuning', 'Contrastive', 'Pre-training']
+            },
+            'dynamic-computation': {
+                title: 'Dynamic Computation',
+                description: 'These approaches utilize Reinforcement Learning (RL) or attention-based methods to dynamically adjust the visual token budget based on input complexity. Unlike static architectural pruning, these methods make runtime decisions about where to allocate compute, enabling adaptive efficiency.',
+                icon: 'fa-bolt',
+                tags: ['Dynamic', 'RL', 'MoE', 'Adaptive', 'Dynamic Resolution', 'Context Sparsification', 'Elastic', 'Gating', 'Dynamic Pruning', 'Reasoning', 'Scaling Laws', 'Trade-off', 'Any Aspect', 'Granularity', 'Multi-Scale']
+            },
+            'hybrid-architectures': {
+                title: 'Hybrid Architectures',
+                description: 'These architectures combine the local feature extraction capabilities of Convolutional Neural Networks (CNNs) with the global attention mechanisms of Transformers. This hybrid approach achieves mobile-friendly efficiency without sacrificing accuracy, making them ideal for edge deployment.',
+                icon: 'fa-layer-group',
+                tags: ['Hybrid', 'Mobile', 'Edge', 'Edge Deploy', 'Hybrid Architectures', 'Quantization', 'Small ViT', 'Sub-Billion', 'On-Device', 'Lightweight', 'Hybrid Encoder', 'Apple', 'Small Model', 'Low-Cost', 'Attention', 'Inference', 'Open-Source', 'Benchmark', 'Multilingual', 'High-Resolution', 'Pixel Unshuffle', 'Quantized', 'Tokenization']
+            },
+            'token-compression': {
+                title: 'Token Compression',
+                description: 'Token compression methods reduce visual tokens via merging, pruning, or compression techniques. These methods can achieve 50-77% FLOPs reduction while maintaining task performance. Many are training-free and can be applied to existing models as plug-and-play solutions.',
+                icon: 'fa-compress-alt',
+                tags: ['Token Compression', 'Token Pruning', 'Token Merging', 'Sparse', 'Compression', 'Pruning', 'Clustering', 'Prune+Merge', 'Training-Free', 'Hierarchical', 'Progressive', 'Text-Guided', 'Unified', 'Cross-Modal', 'Ensemble', 'Pyramid', 'KV-Cache', 'Temporal', 'Survey', 'Aggregation', 'Optimization', 'Sinkhorn', 'Question-Guided', 'Diversity', 'Two-Stage', 'Simple', 'Effective', 'Run-Length', 'Window', 'Concatenation', 'Multi-Level', 'Tree Structure', 'Branch Pruning', 'Stage-wise', 'Curriculum', 'Visual Context Compressor', 'Task-Aware', 'KD', 'Plug-and-Play', 'CLS-guided', 'SOTA', 'Video', 'Long-Context']
+            }
+        };
+
+        // --- PAPER EXTENDED DATA ---
+        // Store methodology details and future directions for each paper
+        const paperExtendedData = {};
+
+        // Generate default extended data for papers
+        papers.forEach(p => {
+            paperExtendedData[p.id] = {
+                methodology_detail: generateMethodologyDetail(p),
+                future_directions: generateFutureDirections(p),
+                annotated_pdf: localStorage.getItem(`paper_pdf_${p.id}`) || null
+            };
+        });
+
+        function generateMethodologyDetail(paper) {
+            const tagBasedDetails = {
+                'Frozen LLM': 'This approach keeps the Large Language Model (LLM) weights frozen during training, only optimizing a lightweight bridging module to align visual features with the LLM\'s embedding space.',
+                'Q-Former': 'Utilizes a Querying Transformer (Q-Former) that learns a set of query embeddings to extract visual features relevant to the language model through cross-attention mechanisms.',
+                'Token Pruning': 'Implements selective removal of less informative visual tokens based on attention scores or learned importance weights, reducing computational overhead during inference.',
+                'Token Merging': 'Combines similar tokens using bipartite matching or clustering algorithms, preserving semantic information while reducing the total number of tokens processed.',
+                'RL': 'Employs Reinforcement Learning to train a policy that decides which visual regions or tokens to process, optimizing for both accuracy and computational efficiency.',
+                'MoE': 'Uses Mixture of Experts architecture where only a subset of expert networks are activated per input, achieving sparse computation while maintaining model capacity.',
+                'Dynamic': 'Adapts computation at runtime based on input complexity, allocating more resources to difficult samples and less to simpler ones.',
+                'Hybrid': 'Combines convolutional layers for local feature extraction with transformer layers for global context modeling, leveraging the strengths of both architectures.',
+                'Quantization': 'Reduces model precision from floating-point to lower-bit representations, decreasing memory footprint and enabling faster inference on specialized hardware.',
+                'Distillation': 'Transfers knowledge from a larger teacher model to a smaller student model, achieving competitive performance with significantly fewer parameters.'
+            };
+
+            let details = paper.summary + '\n\n';
+            paper.tags.forEach(tag => {
+                if (tagBasedDetails[tag]) {
+                    details += tagBasedDetails[tag] + ' ';
+                }
+            });
+            return details.trim() || paper.summary;
+        }
+
+        function generateFutureDirections(paper) {
+            const directions = [];
+
+            if (paper.tags.some(t => ['Token Pruning', 'Token Merging', 'Token Compression'].includes(t))) {
+                directions.push('• Exploring adaptive token budgets that vary based on task difficulty and input complexity.');
+                directions.push('• Investigating the combination of pruning and merging strategies for maximum efficiency.');
+            }
+            if (paper.tags.some(t => ['RL', 'Dynamic'].includes(t))) {
+                directions.push('• Extending dynamic computation to multi-modal reasoning chains.');
+                directions.push('• Developing more efficient policy networks for token selection.');
+            }
+            if (paper.tags.some(t => ['MoE'].includes(t))) {
+                directions.push('• Investigating expert specialization patterns for different visual domains.');
+                directions.push('• Optimizing load balancing across experts for improved training stability.');
+            }
+            if (paper.tags.some(t => ['Hybrid', 'Mobile', 'Edge'].includes(t))) {
+                directions.push('• Hardware-aware architecture search for specific edge devices.');
+                directions.push('• Exploring neural architecture search for optimal CNN-Transformer combinations.');
+            }
+            if (paper.tags.some(t => ['Video', 'Long-Context'].includes(t))) {
+                directions.push('• Scaling to longer video sequences with memory-efficient attention.');
+                directions.push('• Temporal modeling improvements for better video understanding.');
+            }
+
+            // Default directions
+            if (directions.length === 0) {
+                directions.push('• Scaling the approach to larger model sizes and more diverse datasets.');
+                directions.push('• Investigating cross-task transfer learning capabilities.');
+                directions.push('• Exploring combinations with other efficiency techniques.');
+            }
+
+            directions.push('• Benchmarking on emerging multimodal tasks and real-world applications.');
+
+            return directions.join('\n');
+        }
+
+        // --- ROUTER ---
+        let currentView = 'main';
+        let currentPaperId = null;
+        let currentMethodology = null;
+
+        function navigateTo(route) {
+            window.location.hash = route ? `/${route}` : '/';
+        }
+
+        function handleRoute() {
+            const hash = window.location.hash.slice(1) || '/';
+            const parts = hash.split('/').filter(p => p);
+
+            // Hide all views
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+            if (parts.length === 0 || parts[0] === '') {
+                // Main view
+                showMainView();
+            } else if (parts[0] === 'methodology' && parts[1]) {
+                // Methodology view
+                showMethodologyView(parts[1]);
+            } else if (parts[0] === 'paper' && parts[1]) {
+                // Paper detail view
+                showPaperView(parseInt(parts[1]));
+            } else {
+                // Default to main
+                showMainView();
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function showMainView() {
+            currentView = 'main';
+            document.getElementById('view-main').classList.add('active');
+        }
+
+        function showMethodologyView(methodologySlug) {
+            currentView = 'methodology';
+            currentMethodology = methodologySlug;
+            const category = methodologyCategories[methodologySlug];
+
+            if (!category) {
+                navigateTo('');
+                return;
+            }
+
+            // Update breadcrumb
+            document.getElementById('methodology-breadcrumb').textContent = category.title;
+
+            // Update header
+            document.getElementById('methodology-title').textContent = category.title;
+            document.getElementById('methodology-description').textContent = category.description;
+            document.getElementById('methodology-icon').innerHTML = `<i class="fas ${category.icon}"></i>`;
+
+            // Filter papers by tags
+            const categoryPapers = papers.filter(p =>
+                p.tags.some(tag => category.tags.includes(tag))
+            );
+
+            // Update stats
+            document.getElementById('methodology-count').textContent = categoryPapers.length;
+            const avgAcc = categoryPapers.length > 0
+                ? (categoryPapers.reduce((sum, p) => sum + p.accuracy, 0) / categoryPapers.length).toFixed(1)
+                : 0;
+            const avgFlops = categoryPapers.length > 0
+                ? (categoryPapers.reduce((sum, p) => sum + p.flops, 0) / categoryPapers.length).toFixed(1)
+                : 0;
+            document.getElementById('methodology-avg-acc').textContent = avgAcc + '%';
+            document.getElementById('methodology-avg-flops').textContent = avgFlops + 'G';
+
+            // Render papers
+            renderMethodologyPapers(categoryPapers, methodologySlug);
+
+            // Show view
+            document.getElementById('view-methodology').classList.add('active');
+        }
+
+        function renderMethodologyPapers(paperList, methodologySlug) {
+            const grid = document.getElementById('methodology-paper-grid');
+            grid.innerHTML = '';
+
+            if (paperList.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-10 text-center text-slate-400 italic">No papers found in this category.</div>`;
+                return;
+            }
+
+            paperList.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 hover:border-academic-400 dark:hover:border-academic-600 transition-colors cursor-pointer flex flex-col h-full";
+                card.onclick = () => navigateTo(`paper/${p.id}`);
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                            ${p.venue} ${p.year}
+                        </span>
+                        ${p.year === 2025 ? '<span class="w-2 h-2 rounded-full bg-academic-500"></span>' : ''}
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-1 leading-snug group-hover:text-academic-600 dark:group-hover:text-academic-400 transition-colors">${p.title}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 italic mb-4">${p.authors}</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-4 flex-grow font-serif">${p.summary}</p>
+                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex gap-4 text-xs">
+                            <span class="text-slate-500"><strong class="text-slate-700 dark:text-slate-300">${p.accuracy}%</strong> Acc</span>
+                            <span class="text-slate-500"><strong class="text-slate-700 dark:text-slate-300">${p.flops}G</strong> FLOPs</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-academic-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function showPaperView(paperId) {
+            currentView = 'paper';
+            currentPaperId = paperId;
+            const paper = papers.find(p => p.id === paperId);
+
+            if (!paper) {
+                navigateTo('');
+                return;
+            }
+
+            const extendedData = paperExtendedData[paperId] || {};
+
+            // Find which methodology this paper belongs to
+            let paperMethodology = null;
+            for (const [slug, cat] of Object.entries(methodologyCategories)) {
+                if (paper.tags.some(tag => cat.tags.includes(tag))) {
+                    paperMethodology = { slug, ...cat };
+                    break;
+                }
+            }
+
+            // Update breadcrumb
+            const methodologyLink = document.getElementById('paper-methodology-link');
+            if (paperMethodology) {
+                methodologyLink.textContent = paperMethodology.title;
+                methodologyLink.onclick = (e) => { e.preventDefault(); navigateTo(`methodology/${paperMethodology.slug}`); };
+            } else {
+                methodologyLink.textContent = 'Papers';
+                methodologyLink.onclick = (e) => { e.preventDefault(); navigateTo(''); };
+            }
+            document.getElementById('paper-breadcrumb').textContent = paper.title;
+
+            // Update header
+            document.getElementById('paper-venue-badge').textContent = `${paper.venue} ${paper.year}`;
+            document.getElementById('paper-year-dot').classList.toggle('hidden', paper.year !== 2025);
+            document.getElementById('paper-title').textContent = paper.title;
+            document.getElementById('paper-authors').textContent = paper.authors;
+
+            // Update metrics
+            document.getElementById('paper-accuracy').textContent = paper.accuracy + '%';
+            document.getElementById('paper-flops').textContent = paper.flops + 'G';
+            document.getElementById('paper-params').textContent = paper.params + 'M';
+
+            // Update content sections
+            document.getElementById('paper-summary').textContent = paper.summary;
+            document.getElementById('paper-methodology-detail').textContent = extendedData.methodology_detail || paper.summary;
+            document.getElementById('paper-future-directions').innerHTML = (extendedData.future_directions || '').replace(/\n/g, '<br>');
+
+            // Update tags
+            const tagsContainer = document.getElementById('paper-tags');
+            tagsContainer.innerHTML = paper.tags.map(t =>
+                `<span class="text-sm font-mono text-academic-600 dark:text-academic-400 border border-academic-200 dark:border-academic-800 px-3 py-1 rounded-full">${t}</span>`
+            ).join('');
+
+            // Update source link
+            document.getElementById('paper-source-link').href = paper.link;
+
+            // Update PDF section
+            updatePdfSection(paperId, extendedData.annotated_pdf);
+
+            // Show view
+            document.getElementById('view-paper').classList.add('active');
+        }
+
+        function updatePdfSection(paperId, pdfUrl) {
+            const placeholder = document.getElementById('paper-pdf-placeholder');
+            const uploaded = document.getElementById('paper-pdf-uploaded');
+            const pdfLink = document.getElementById('paper-pdf-link');
+
+            if (pdfUrl) {
+                placeholder.classList.add('hidden');
+                uploaded.classList.remove('hidden');
+                pdfLink.href = pdfUrl;
+            } else {
+                placeholder.classList.remove('hidden');
+                uploaded.classList.add('hidden');
+            }
+        }
+
+        // --- GITHUB OAUTH ---
+        let githubAccessToken = localStorage.getItem('github_access_token') || null;
+        let githubClientId = localStorage.getItem('github_client_id') || '';
+        let deviceCodeInterval = null;
+        let currentDeviceCode = null;
+
+        function openGitHubModal() {
+            document.getElementById('github-oauth-modal').classList.remove('hidden');
+            document.getElementById('github-client-id').value = githubClientId;
+            showOAuthStep(1);
+        }
+
+        function closeGitHubModal() {
+            document.getElementById('github-oauth-modal').classList.add('hidden');
+            cancelGitHubAuth();
+        }
+
+        function showOAuthStep(step) {
+            document.querySelectorAll('.oauth-step').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`oauth-step-${step}`).classList.remove('hidden');
+            document.getElementById('oauth-error').classList.add('hidden');
+        }
+
+        function showOAuthError(message) {
+            document.getElementById('oauth-error').classList.remove('hidden');
+            document.getElementById('oauth-error-text').textContent = message;
+        }
+
+        async function startGitHubAuth() {
+            const clientId = document.getElementById('github-client-id').value.trim();
+            if (!clientId) {
+                showOAuthError('Please enter your GitHub OAuth App Client ID.');
+                return;
+            }
+
+            githubClientId = clientId;
+            localStorage.setItem('github_client_id', clientId);
+
+            try {
+                // Request device code
+                const response = await fetch('https://github.com/login/device/code', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        client_id: clientId,
+                        scope: 'repo'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get device code. Check your Client ID.');
+                }
+
+                const data = await response.json();
+                currentDeviceCode = data.device_code;
+
+                // Show user code
+                document.getElementById('github-user-code').textContent = data.user_code;
+                showOAuthStep(2);
+
+                // Open GitHub device page
+                window.open(data.verification_uri, '_blank');
+
+                // Start polling for token
+                const interval = data.interval || 5;
+                deviceCodeInterval = setInterval(() => pollForToken(clientId, data.device_code), interval * 1000);
+
+            } catch (error) {
+                showOAuthError(error.message);
+            }
+        }
+
+        async function pollForToken(clientId, deviceCode) {
+            try {
+                const response = await fetch('https://github.com/login/oauth/access_token', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        client_id: clientId,
+                        device_code: deviceCode,
+                        grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.access_token) {
+                    // Success!
+                    githubAccessToken = data.access_token;
+                    localStorage.setItem('github_access_token', data.access_token);
+                    clearInterval(deviceCodeInterval);
+                    showOAuthStep(3);
+                    showToast('Successfully authenticated with GitHub!', 'success');
+                } else if (data.error === 'authorization_pending') {
+                    // Still waiting, continue polling
+                } else if (data.error === 'slow_down') {
+                    // Slow down polling
+                } else if (data.error === 'expired_token') {
+                    clearInterval(deviceCodeInterval);
+                    showOAuthError('Authorization expired. Please try again.');
+                    showOAuthStep(1);
+                } else if (data.error === 'access_denied') {
+                    clearInterval(deviceCodeInterval);
+                    showOAuthError('Authorization was denied.');
+                    showOAuthStep(1);
+                }
+            } catch (error) {
+                // Network error, keep polling
+            }
+        }
+
+        function cancelGitHubAuth() {
+            if (deviceCodeInterval) {
+                clearInterval(deviceCodeInterval);
+                deviceCodeInterval = null;
+            }
+            currentDeviceCode = null;
+        }
+
+        function isGitHubAuthenticated() {
+            return !!githubAccessToken;
+        }
+
+        // --- PDF UPLOAD ---
+        let selectedPdfFile = null;
+
+        function openPdfUploadModal() {
+            if (!isGitHubAuthenticated()) {
+                openGitHubModal();
+                return;
+            }
+
+            const paper = papers.find(p => p.id === currentPaperId);
+            if (paper) {
+                document.getElementById('upload-paper-title').textContent = paper.title;
+            }
+
+            // Reset state
+            selectedPdfFile = null;
+            document.getElementById('pdf-file-input').value = '';
+            document.getElementById('selected-file-info').classList.add('hidden');
+            document.getElementById('upload-btn').disabled = true;
+            document.getElementById('upload-step-1').classList.remove('hidden');
+            document.getElementById('upload-step-2').classList.add('hidden');
+            document.getElementById('upload-step-3').classList.add('hidden');
+            document.getElementById('upload-error').classList.add('hidden');
+
+            document.getElementById('pdf-upload-modal').classList.remove('hidden');
+        }
+
+        function closePdfUploadModal() {
+            document.getElementById('pdf-upload-modal').classList.add('hidden');
+            selectedPdfFile = null;
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                selectedPdfFile = file;
+                document.getElementById('selected-file-name').textContent = file.name;
+                document.getElementById('selected-file-size').textContent = formatFileSize(file.size);
+                document.getElementById('selected-file-info').classList.remove('hidden');
+                document.getElementById('upload-btn').disabled = false;
+            }
+        }
+
+        function clearSelectedFile() {
+            selectedPdfFile = null;
+            document.getElementById('pdf-file-input').value = '';
+            document.getElementById('selected-file-info').classList.add('hidden');
+            document.getElementById('upload-btn').disabled = true;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // Setup drag and drop
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('pdf-drop-zone');
+            if (dropZone) {
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('dragover');
+                });
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.classList.remove('dragover');
+                });
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+                    const file = e.dataTransfer.files[0];
+                    if (file && file.type === 'application/pdf') {
+                        selectedPdfFile = file;
+                        document.getElementById('selected-file-name').textContent = file.name;
+                        document.getElementById('selected-file-size').textContent = formatFileSize(file.size);
+                        document.getElementById('selected-file-info').classList.remove('hidden');
+                        document.getElementById('upload-btn').disabled = false;
+                    }
+                });
+            }
+        });
+
+        async function uploadPdf() {
+            if (!selectedPdfFile || !githubAccessToken) return;
+
+            const owner = document.getElementById('repo-owner').value.trim();
+            const repo = document.getElementById('repo-name').value.trim();
+
+            if (!owner || !repo) {
+                document.getElementById('upload-error').classList.remove('hidden');
+                document.getElementById('upload-error-text').textContent = 'Please enter repository owner and name.';
+                return;
+            }
+
+            // Show uploading state
+            document.getElementById('upload-step-1').classList.add('hidden');
+            document.getElementById('upload-step-2').classList.remove('hidden');
+            document.getElementById('upload-error').classList.add('hidden');
+
+            try {
+                // Read file as base64
+                const base64Content = await readFileAsBase64(selectedPdfFile);
+
+                // Create file path
+                const paper = papers.find(p => p.id === currentPaperId);
+                const safeName = paper.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
+                const filePath = `annotated-pdfs/paper_${currentPaperId}_${safeName}.pdf`;
+
+                // Check if file exists (to get sha for update)
+                let sha = null;
+                try {
+                    const checkResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
+                        headers: {
+                            'Authorization': `Bearer ${githubAccessToken}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    if (checkResponse.ok) {
+                        const existingFile = await checkResponse.json();
+                        sha = existingFile.sha;
+                    }
+                } catch (e) {
+                    // File doesn't exist, that's fine
+                }
+
+                // Upload file
+                const uploadBody = {
+                    message: `Add annotated PDF for paper ${currentPaperId}: ${paper.title}`,
+                    content: base64Content
+                };
+                if (sha) {
+                    uploadBody.sha = sha;
+                }
+
+                const uploadResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${githubAccessToken}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(uploadBody)
+                });
+
+                if (!uploadResponse.ok) {
+                    const errorData = await uploadResponse.json();
+                    throw new Error(errorData.message || 'Failed to upload file');
+                }
+
+                const result = await uploadResponse.json();
+                const pdfUrl = result.content.html_url;
+
+                // Save to localStorage and update extended data
+                localStorage.setItem(`paper_pdf_${currentPaperId}`, pdfUrl);
+                paperExtendedData[currentPaperId].annotated_pdf = pdfUrl;
+
+                // Update UI
+                updatePdfSection(currentPaperId, pdfUrl);
+
+                // Show success
+                document.getElementById('upload-step-2').classList.add('hidden');
+                document.getElementById('upload-step-3').classList.remove('hidden');
+                showToast('PDF uploaded successfully!', 'success');
+
+            } catch (error) {
+                document.getElementById('upload-step-2').classList.add('hidden');
+                document.getElementById('upload-step-1').classList.remove('hidden');
+                document.getElementById('upload-error').classList.remove('hidden');
+                document.getElementById('upload-error-text').textContent = error.message;
+            }
+        }
+
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const messageEl = document.getElementById('toast-message');
+
+            messageEl.textContent = message;
+            icon.className = type === 'success'
+                ? 'fas fa-check-circle text-green-400 dark:text-green-600'
+                : 'fas fa-exclamation-circle text-red-400 dark:text-red-600';
+
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
         // --- THEME LOGIC ---
         function toggleTheme() {
             const html = document.documentElement;
@@ -834,7 +1882,10 @@
 
         // --- MODAL ---
         const modal = document.getElementById('paper-modal');
+        let modalPaperId = null;
+
         function openModal(paper) {
+            modalPaperId = paper.id;
             document.getElementById('modal-title').innerText = paper.title;
             document.getElementById('modal-authors').innerText = paper.authors;
             document.getElementById('modal-summary').innerText = paper.summary;
@@ -843,6 +1894,13 @@
             document.getElementById('modal-acc').innerText = paper.accuracy + '%';
             document.getElementById('modal-flops').innerText = paper.flops + 'G';
             document.getElementById('modal-params').innerText = paper.params + 'M';
+
+            // Set up View Details button
+            document.getElementById('modal-details-btn').onclick = () => {
+                closeModal();
+                navigateTo(`paper/${paper.id}`);
+            };
+
             modal.classList.remove('hidden');
         }
         function closeModal() {
@@ -854,6 +1912,10 @@
             loadTheme();
             initChart();
             renderPapers(papers);
+
+            // Initialize router
+            window.addEventListener('hashchange', handleRoute);
+            handleRoute(); // Handle initial route
         });
     </script>
 </body>
