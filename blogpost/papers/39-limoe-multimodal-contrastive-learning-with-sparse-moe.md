@@ -2,7 +2,6 @@
 
 **Authors:** Basil Mustafa et al.  
 **Venue:** NeurIPS 2022  
-**Paper ID:** 39
 
 ## Abstract
 

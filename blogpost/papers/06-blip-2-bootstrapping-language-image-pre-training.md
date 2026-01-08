@@ -2,7 +2,6 @@
 
 **Authors:** Junnan Li et al.  
 **Venue:** ICML 2023  
-**Paper ID:** 6
 
 ## Abstract
 

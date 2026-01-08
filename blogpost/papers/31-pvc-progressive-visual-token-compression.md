@@ -2,7 +2,6 @@
 
 **Authors:** Yang et al.  
 **Venue:** CVPR 2025  
-**Paper ID:** 31
 
 ## Abstract
 

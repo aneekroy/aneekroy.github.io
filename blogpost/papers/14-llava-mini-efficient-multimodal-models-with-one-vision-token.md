@@ -2,7 +2,6 @@
 
 **Authors:** Shaolei Zhang et al.  
 **Venue:** arXiv 2025  
-**Paper ID:** 14
 
 ## Abstract
 

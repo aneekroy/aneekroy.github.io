@@ -2,7 +2,6 @@
 
 **Authors:** Kan Wu et al. (Microsoft)  
 **Venue:** ECCV 2022  
-**Paper ID:** 23
 
 ## Abstract
 

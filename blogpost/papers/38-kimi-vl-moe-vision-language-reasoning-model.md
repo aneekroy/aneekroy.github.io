@@ -2,7 +2,6 @@
 
 **Authors:** Moonshot AI  
 **Venue:** arXiv 2025  
-**Paper ID:** 38
 
 ## Abstract
 

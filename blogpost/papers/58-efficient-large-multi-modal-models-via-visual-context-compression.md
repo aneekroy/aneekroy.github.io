@@ -2,7 +2,6 @@
 
 **Authors:** Jieneng Chen, Luoxin Ye, Ju He, Zhao-Yang Wang, Daniel Khashabi, Alan Yuille  
 **Venue:** arXiv 2024  
-**Paper ID:** 58
 
 ## Abstract
 

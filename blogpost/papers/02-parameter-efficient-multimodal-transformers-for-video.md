@@ -2,7 +2,6 @@
 
 **Authors:** Sangho Lee et al.  
 **Venue:** ICLR 2021  
-**Paper ID:** 2
 
 ## Abstract
 

@@ -2,7 +2,6 @@
 
 **Authors:** Xianhang Li et al.  
 **Venue:** CVPR 2025  
-**Paper ID:** 11
 
 ## Abstract
 

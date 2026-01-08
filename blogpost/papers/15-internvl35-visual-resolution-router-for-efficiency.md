@@ -2,7 +2,6 @@
 
 **Authors:** Wenhai Wang et al.  
 **Venue:** arXiv 2025  
-**Paper ID:** 15
 
 ## Abstract
 

@@ -2,7 +2,6 @@
 
 **Authors:** Rohan Choudhury, Guanglei Zhu Sihan Liu, Koichiro Niinuma,Kris M. Kitani, László A. Jeni   
 **Venue:** NeurIPS 2024  
-**Paper ID:** 50
 
 ## Abstract
 

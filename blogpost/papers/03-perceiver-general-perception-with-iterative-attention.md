@@ -2,7 +2,6 @@
 
 **Authors:** Andrew Jaegle et al.  
 **Venue:** ICML 2021  
-**Paper ID:** 3
 
 ## Abstract
 

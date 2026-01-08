@@ -2,7 +2,6 @@
 
 **Authors:** Keda Tao et al.  
 **Venue:** CVPR 2025  
-**Paper ID:** 41
 
 ## Abstract
 

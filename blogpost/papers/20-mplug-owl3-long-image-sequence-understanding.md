@@ -2,7 +2,6 @@
 
 **Authors:** Jiabo Ye et al.  
 **Venue:** arXiv 2024  
-**Paper ID:** 20
 
 ## Abstract
 

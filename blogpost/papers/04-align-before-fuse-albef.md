@@ -2,7 +2,6 @@
 
 **Authors:** Junnan Li et al.  
 **Venue:** NeurIPS 2021  
-**Paper ID:** 4
 
 ## Abstract
 

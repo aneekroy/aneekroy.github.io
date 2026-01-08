@@ -2,7 +2,6 @@
 
 **Authors:** Yue Zhao et al.  
 **Venue:** arXiv 2025  
-**Paper ID:** 17
 
 ## Abstract
 

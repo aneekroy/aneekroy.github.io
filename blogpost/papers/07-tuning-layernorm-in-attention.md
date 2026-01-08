@@ -2,7 +2,6 @@
 
 **Authors:** Bingchen Zhao et al.  
 **Venue:** ICLR 2024  
-**Paper ID:** 7
 
 ## Abstract
 

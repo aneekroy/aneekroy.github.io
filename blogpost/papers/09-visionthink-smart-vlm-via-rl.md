@@ -2,7 +2,6 @@
 
 **Authors:** Senqiao Yang et al.  
 **Venue:** NeurIPS 2025  
-**Paper ID:** 9
 
 ## Abstract
 

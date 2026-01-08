@@ -2,7 +2,6 @@
 
 **Authors:** OpenGVLab  
 **Venue:** arXiv 2024  
-**Paper ID:** 53
 
 ## Abstract
 

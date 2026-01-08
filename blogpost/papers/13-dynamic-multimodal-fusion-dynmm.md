@@ -2,7 +2,6 @@
 
 **Authors:** Zihui Xue, Radu Marculescu  
 **Venue:** CVPR 2023  
-**Paper ID:** 13
 
 ## Abstract
 

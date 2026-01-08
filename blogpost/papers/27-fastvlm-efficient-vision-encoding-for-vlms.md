@@ -2,7 +2,6 @@
 
 **Authors:** Pavan Kumar Anasosalu Vasu et al. (Apple)  
 **Venue:** CVPR 2025  
-**Paper ID:** 27
 
 ## Abstract
 

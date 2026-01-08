@@ -2,7 +2,6 @@
 
 **Authors:** Various  
 **Venue:** ACL 2025  
-**Paper ID:** 44
 
 ## Abstract
 

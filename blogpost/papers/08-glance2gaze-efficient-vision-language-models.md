@@ -2,7 +2,6 @@
 
 **Authors:** Juan Chen et al.  
 **Venue:** NeurIPS 2025  
-**Paper ID:** 8
 
 ## Abstract
 

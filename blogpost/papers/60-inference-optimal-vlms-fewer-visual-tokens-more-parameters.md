@@ -2,7 +2,6 @@
 
 **Authors:** Various  
 **Venue:** ICLR 2025  
-**Paper ID:** 60
 
 ## Abstract
 

@@ -2,7 +2,6 @@
 
 **Authors:** OpenBMB Team  
 **Venue:** Nature Comm. 2025  
-**Paper ID:** 29
 
 ## Abstract
 

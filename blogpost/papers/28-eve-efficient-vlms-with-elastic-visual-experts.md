@@ -2,7 +2,6 @@
 
 **Authors:** Rang et al.  
 **Venue:** AAAI 2025  
-**Paper ID:** 28
 
 ## Abstract
 

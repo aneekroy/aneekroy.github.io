@@ -2,7 +2,6 @@
 
 **Authors:** Various  
 **Venue:** ICCV 2025  
-**Paper ID:** 57
 
 ## Abstract
 

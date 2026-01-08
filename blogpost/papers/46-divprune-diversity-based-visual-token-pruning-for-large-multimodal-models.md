@@ -2,7 +2,6 @@
 
 **Authors:** Saeed Ranjbar Alvar, Gursimran Singh†, Mohammad Akbari†, Yong Zhang  
 **Venue:** CVPR 2025  
-**Paper ID:** 46
 
 ## Abstract
 

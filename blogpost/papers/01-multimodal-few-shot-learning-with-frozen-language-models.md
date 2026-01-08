@@ -2,7 +2,6 @@
 
 **Authors:** Maria Tsimpoukelli et al.  
 **Venue:** NeurIPS 2021  
-**Paper ID:** 1
 
 ## Abstract
 

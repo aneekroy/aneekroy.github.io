@@ -2,7 +2,6 @@
 
 **Authors:** Sungeun Park, Edward Choi  
 **Venue:** ICASSP 2024  
-**Paper ID:** 12
 
 ## Abstract
 

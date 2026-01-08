@@ -2,7 +2,6 @@
 
 **Authors:** Various  
 **Venue:** CVPR 2025  
-**Paper ID:** 47
 
 ## Abstract
 

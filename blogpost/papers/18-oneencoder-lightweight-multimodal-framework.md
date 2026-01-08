@@ -2,7 +2,6 @@
 
 **Authors:** Bilal Faye et al.  
 **Venue:** Neural Comp. 2025  
-**Paper ID:** 18
 
 ## Abstract
 

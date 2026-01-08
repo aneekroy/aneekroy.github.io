@@ -2,7 +2,6 @@
 
 **Authors:** Yang et al.  
 **Venue:** arXiv 2024  
-**Paper ID:** 37
 
 ## Abstract
 

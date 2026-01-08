@@ -2,7 +2,6 @@
 
 **Authors:** Zhibin Lan, Liqiang Niu, Fandong Meng, Wenbo Li, Jie Zhou, Jinsong Su  
 **Venue:** ACL 2025  
-**Paper ID:** 48
 
 ## Abstract
 

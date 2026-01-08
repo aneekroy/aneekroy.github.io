@@ -2,7 +2,6 @@
 
 **Authors:** Liang Chen et al.  
 **Venue:** ECCV 2024  
-**Paper ID:** 24
 
 ## Abstract
 

@@ -2,7 +2,6 @@
 
 **Authors:** Yongming Rao et al.  
 **Venue:** NeurIPS 2021  
-**Paper ID:** 26
 
 ## Abstract
 

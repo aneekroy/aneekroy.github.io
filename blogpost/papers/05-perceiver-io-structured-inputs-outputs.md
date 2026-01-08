@@ -2,7 +2,6 @@
 
 **Authors:** Andrew Jaegle et al.  
 **Venue:** ICLR 2022  
-**Paper ID:** 5
 
 ## Abstract
 

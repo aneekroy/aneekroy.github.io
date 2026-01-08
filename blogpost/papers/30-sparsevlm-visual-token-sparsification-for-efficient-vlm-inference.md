@@ -2,7 +2,6 @@
 
 **Authors:** Yuan Zhang et al.  
 **Venue:** ICML 2025  
-**Paper ID:** 30
 
 ## Abstract
 

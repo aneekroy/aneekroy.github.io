@@ -2,7 +2,6 @@
 
 **Authors:** Jiayi Yu et al.  
 **Venue:** ACM International Conference on Multimedia 2025  
-**Paper ID:** 19
 
 ## Abstract
 

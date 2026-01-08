@@ -2,7 +2,6 @@
 
 **Authors:** Daniel Bolya et al.  
 **Venue:** ICLR 2023  
-**Paper ID:** 25
 
 ## Abstract
 

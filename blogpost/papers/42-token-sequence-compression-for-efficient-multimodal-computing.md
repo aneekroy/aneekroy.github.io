@@ -2,7 +2,6 @@
 
 **Authors:** Yasmine Omri et al.  
 **Venue:** arXiv 2025  
-**Paper ID:** 42
 
 ## Abstract
 

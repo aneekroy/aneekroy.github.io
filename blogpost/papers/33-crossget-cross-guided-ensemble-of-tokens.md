@@ -2,7 +2,6 @@
 
 **Authors:** Shi et al.  
 **Venue:** ICML 2024  
-**Paper ID:** 33
 
 ## Abstract
 

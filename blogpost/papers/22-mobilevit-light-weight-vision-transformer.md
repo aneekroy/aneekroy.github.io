@@ -2,7 +2,6 @@
 
 **Authors:** Sachin Mehta, Mohammad Rastegari (Apple)  
 **Venue:** ICLR 2022  
-**Paper ID:** 22
 
 ## Abstract
 

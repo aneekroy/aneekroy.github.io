@@ -2,7 +2,6 @@
 
 **Authors:** Yifan Li, Wentao Bao, Botao Ye, Zhen Tan, Tianlong Chen, Huan Liu, Yu Kong  
 **Venue:** CVPR-W 2025  
-**Paper ID:** 55
 
 ## Abstract
 

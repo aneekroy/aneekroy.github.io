@@ -2,7 +2,6 @@
 
 **Authors:** Yuzhang Shang et al.  
 **Venue:** ICCV 2025  
-**Paper ID:** 36
 
 ## Abstract
 
