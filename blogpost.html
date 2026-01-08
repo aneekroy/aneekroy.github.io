@@ -471,6 +471,27 @@
             </div>
         </section>
 
+        <!-- Markdown Content Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-file-alt text-academic-500"></i>
+                Full Paper Details
+            </h2>
+            <div id="paper-markdown-section" class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <div id="paper-markdown-loading" class="text-center py-8">
+                    <i class="fas fa-spinner fa-spin text-2xl text-academic-600 dark:text-academic-400 mb-4"></i>
+                    <p class="text-slate-500 dark:text-slate-400">Loading paper details...</p>
+                </div>
+                <div id="paper-markdown-content" class="hidden prose dark:prose-invert max-w-none">
+                    <!-- Markdown content will be rendered here -->
+                </div>
+                <div id="paper-markdown-error" class="hidden text-center py-8">
+                    <i class="fas fa-exclamation-triangle text-2xl text-yellow-500 mb-4"></i>
+                    <p class="text-slate-500 dark:text-slate-400">Unable to load paper details.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Annotated PDF Section -->
         <section class="mb-10">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
@@ -589,15 +610,21 @@
 
                         <!-- Step 1: Initial State -->
                         <div id="oauth-step-1" class="oauth-step">
-                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed">
-                                To upload annotated PDFs, you need to authenticate with GitHub. This uses the Device Flow for secure authentication.
+                            <p class="text-slate-600 dark:text-slate-400 mb-4 text-sm leading-relaxed">
+                                To upload annotated PDFs, you need to authenticate with GitHub using a Cloudflare Worker proxy.
                             </p>
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
-                                <p class="text-xs text-slate-500 mb-2 font-medium uppercase">Required Setup</p>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">
-                                    Enter your GitHub OAuth App Client ID below. You can create one at
-                                    <a href="https://github.com/settings/developers" target="_blank" class="text-academic-600 dark:text-academic-400 hover:underline">GitHub Developer Settings</a>.
-                                </p>
+                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-4">
+                                <p class="text-xs text-slate-500 mb-2 font-medium uppercase">Setup Instructions</p>
+                                <ol class="text-xs text-slate-600 dark:text-slate-400 list-decimal list-inside space-y-1">
+                                    <li>Deploy the worker from <code class="bg-slate-200 dark:bg-slate-700 px-1 rounded">workers/github-oauth-proxy.js</code></li>
+                                    <li>Create a <a href="https://github.com/settings/developers" target="_blank" class="text-academic-600 dark:text-academic-400 hover:underline">GitHub OAuth App</a></li>
+                                    <li>Add your Client Secret to Worker environment variables</li>
+                                </ol>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 sans-font">Worker URL</label>
+                                <input type="text" id="github-worker-url" placeholder="https://github-oauth-proxy.xxx.workers.dev"
+                                    class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-academic-500 focus:border-academic-500 outline-none transition-colors dark:text-white font-mono text-xs">
                             </div>
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 sans-font">Client ID</label>
@@ -1343,8 +1370,197 @@
             // Update PDF section
             updatePdfSection(paperId, extendedData.annotated_pdf);
 
+            // Load and render markdown content
+            loadPaperMarkdown(paperId);
+
             // Show view
             document.getElementById('view-paper').classList.add('active');
+        }
+
+        // Simple markdown to HTML converter
+        function markdownToHTML(markdown) {
+            let html = markdown;
+            
+            // Split into lines for processing
+            const lines = html.split('\n');
+            const processed = [];
+            let inList = false;
+            let listItems = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // Headers
+                if (line.startsWith('### ')) {
+                    if (inList) {
+                        processed.push('</ul>');
+                        inList = false;
+                    }
+                    processed.push(`<h3 class="text-lg font-bold text-slate-900 dark:text-white mt-6 mb-3 sans-font">${line.substring(4)}</h3>`);
+                    continue;
+                }
+                if (line.startsWith('## ')) {
+                    if (inList) {
+                        processed.push('</ul>');
+                        inList = false;
+                    }
+                    processed.push(`<h2 class="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4 sans-font">${line.substring(3)}</h2>`);
+                    continue;
+                }
+                if (line.startsWith('# ')) {
+                    if (inList) {
+                        processed.push('</ul>');
+                        inList = false;
+                    }
+                    processed.push(`<h1 class="text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 sans-font">${line.substring(2)}</h1>`);
+                    continue;
+                }
+                
+                // Horizontal rules
+                if (line === '---') {
+                    if (inList) {
+                        processed.push('</ul>');
+                        inList = false;
+                    }
+                    processed.push('<hr class="my-6 border-slate-200 dark:border-slate-700">');
+                    continue;
+                }
+                
+                // List items
+                if (line.match(/^[-•]\s+/)) {
+                    if (!inList) {
+                        inList = true;
+                        listItems = [];
+                    }
+                    const itemText = line.replace(/^[-•]\s+/, '');
+                    listItems.push(`<li class="ml-4 mb-1 text-slate-700 dark:text-slate-300">${processInlineMarkdown(itemText)}</li>`);
+                    continue;
+                }
+                
+                // End of list
+                if (inList && line === '') {
+                    processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                    inList = false;
+                    listItems = [];
+                    continue;
+                }
+                
+                // Regular paragraphs
+                if (line && !inList) {
+                    processed.push(`<p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">${processInlineMarkdown(line)}</p>`);
+                } else if (!line && !inList) {
+                    // Empty line
+                    continue;
+                }
+            }
+            
+            // Close any open list
+            if (inList) {
+                processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+            }
+            
+            return processed.join('\n');
+        }
+        
+        function processInlineMarkdown(text) {
+            // Bold
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+            
+            // Italic
+            text = text.replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>');
+            
+            // Links
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-academic-600 dark:text-academic-400 hover:underline">$1</a>');
+            
+            // Code (inline)
+            text = text.replace(/`([^`]+)`/g, '<code class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-sm font-mono text-slate-900 dark:text-slate-100">$1</code>');
+            
+            return text;
+        }
+
+        async function loadPaperMarkdown(paperId) {
+            const loadingEl = document.getElementById('paper-markdown-loading');
+            const contentEl = document.getElementById('paper-markdown-content');
+            const errorEl = document.getElementById('paper-markdown-error');
+            
+            // Show loading state
+            loadingEl.classList.remove('hidden');
+            contentEl.classList.add('hidden');
+            errorEl.classList.add('hidden');
+            
+            try {
+                const paper = papers.find(p => p.id === paperId);
+                if (!paper) {
+                    throw new Error('Paper not found');
+                }
+                
+                // Create filename: pad ID with zeros and sanitize title
+                const paddedId = String(paperId).padStart(2, '0');
+                // Sanitize title to match Python script logic exactly
+                // Python: re.sub(r'[^\w\s-]', '', title) then re.sub(r'[-\s]+', '-', filename) then .lower()
+                let sanitizedTitle = paper.title
+                    .replace(/[^\w\s-]/g, '')  // Remove special chars (keep word chars, spaces, hyphens)
+                    .replace(/[-\s]+/g, '-')   // Replace spaces and multiple hyphens with single hyphen
+                    .toLowerCase()              // Convert to lowercase
+                    .replace(/^-+|-+$/g, '');  // Remove leading/trailing hyphens
+                
+                // Limit length (Python used 100, but we'll be safe)
+                if (sanitizedTitle.length > 100) {
+                    sanitizedTitle = sanitizedTitle.substring(0, 100);
+                }
+                
+                const markdownPath = `blogpost/papers/${paddedId}-${sanitizedTitle}.md`;
+                
+                // Fetch markdown file
+                const response = await fetch(markdownPath);
+                if (!response.ok) {
+                    // Try alternative: just by ID pattern (in case title doesn't match exactly)
+                    const altPath = `blogpost/papers/${paddedId}-*.md`;
+                    // Since we can't glob, try a few common variations
+                    const variations = [
+                        markdownPath,
+                        `blogpost/papers/${paddedId}-${paper.title.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 50)}.md`
+                    ];
+                    
+                    let loaded = false;
+                    for (const path of variations) {
+                        try {
+                            const altResponse = await fetch(path);
+                            if (altResponse.ok) {
+                                const markdown = await altResponse.text();
+                                const html = markdownToHTML(markdown);
+                                contentEl.innerHTML = html;
+                                loadingEl.classList.add('hidden');
+                                contentEl.classList.remove('hidden');
+                                loaded = true;
+                                break;
+                            }
+                        } catch (e) {
+                            continue;
+                        }
+                    }
+                    
+                    if (!loaded) {
+                        throw new Error(`Failed to load markdown file`);
+                    }
+                    return;
+                }
+                
+                const markdown = await response.text();
+                
+                // Convert markdown to HTML
+                const html = markdownToHTML(markdown);
+                
+                // Display content
+                contentEl.innerHTML = html;
+                loadingEl.classList.add('hidden');
+                contentEl.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
         }
 
         function updatePdfSection(paperId, pdfUrl) {
@@ -1363,6 +1579,10 @@
         }
 
         // --- GITHUB OAUTH ---
+        // IMPORTANT: Replace with your Cloudflare Worker URL after deployment
+        // See workers/github-oauth-proxy.js for setup instructions
+        const OAUTH_WORKER_URL = localStorage.getItem('oauth_worker_url') || 'https://github-oauth-proxy.YOUR_SUBDOMAIN.workers.dev';
+
         let githubAccessToken = localStorage.getItem('github_access_token') || null;
         let githubClientId = localStorage.getItem('github_client_id') || '';
         let deviceCodeInterval = null;
@@ -1371,6 +1591,7 @@
         function openGitHubModal() {
             document.getElementById('github-oauth-modal').classList.remove('hidden');
             document.getElementById('github-client-id').value = githubClientId;
+            document.getElementById('github-worker-url').value = localStorage.getItem('oauth_worker_url') || '';
             showOAuthStep(1);
         }
 
@@ -1391,18 +1612,26 @@
         }
 
         async function startGitHubAuth() {
+            const workerUrl = document.getElementById('github-worker-url').value.trim();
             const clientId = document.getElementById('github-client-id').value.trim();
+
+            if (!workerUrl) {
+                showOAuthError('Please enter your Cloudflare Worker URL.');
+                return;
+            }
             if (!clientId) {
                 showOAuthError('Please enter your GitHub OAuth App Client ID.');
                 return;
             }
 
+            // Save to localStorage
+            localStorage.setItem('oauth_worker_url', workerUrl);
             githubClientId = clientId;
             localStorage.setItem('github_client_id', clientId);
 
             try {
-                // Request device code
-                const response = await fetch('https://github.com/login/device/code', {
+                // Request device code via Cloudflare Worker
+                const response = await fetch(`${workerUrl}/device/code`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -1415,10 +1644,14 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to get device code. Check your Client ID.');
+                    throw new Error('Failed to get device code. Check your Worker URL and Client ID.');
                 }
 
                 const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error_description || data.error);
+                }
                 currentDeviceCode = data.device_code;
 
                 // Show user code
@@ -1439,7 +1672,9 @@
 
         async function pollForToken(clientId, deviceCode) {
             try {
-                const response = await fetch('https://github.com/login/oauth/access_token', {
+                // Poll for access token via Cloudflare Worker
+                const workerUrl = localStorage.getItem('oauth_worker_url');
+                const response = await fetch(`${workerUrl}/access_token`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -1447,8 +1682,7 @@
                     },
                     body: JSON.stringify({
                         client_id: clientId,
-                        device_code: deviceCode,
-                        grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
+                        device_code: deviceCode
                     })
                 });
 
