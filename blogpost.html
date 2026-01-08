@@ -1437,15 +1437,24 @@
                     continue;
                 }
                 
-                // End of list
-                if (inList && line === '') {
-                    processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
-                    inList = false;
-                    listItems = [];
-                    continue;
+                // End of list - close when encountering empty line OR non-list content
+                if (inList) {
+                    if (line === '') {
+                        // Empty line closes the list
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                        continue;
+                    } else if (!line.match(/^[-•]\s+/)) {
+                        // Non-list content closes the list first, then process the content
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                        // Continue processing this line as regular content (don't continue here)
+                    }
                 }
                 
-                // Regular paragraphs
+                // Regular paragraphs (only if not in list, or list was just closed above)
                 if (line && !inList) {
                     processed.push(`<p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">${processInlineMarkdown(line)}</p>`);
                 } else if (!line && !inList) {

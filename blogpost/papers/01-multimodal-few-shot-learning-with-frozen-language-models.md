@@ -37,4 +37,3 @@ This approach keeps the Large Language Model (LLM) weights frozen during trainin
 
 ---
 
-*Generated from blogpost.html survey data*
