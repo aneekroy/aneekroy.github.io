@@ -66,11 +66,6 @@
         /* Methodology cards hover */
         .methodology-card { cursor: pointer; transition: all 0.2s; }
         .methodology-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15); }
-        /* PDF drop zone */
-        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.2s; }
-        .drop-zone.dragover { border-color: #0284c7; background: rgba(2, 132, 199, 0.05); }
-        .dark .drop-zone { border-color: #475569; }
-        .dark .drop-zone.dragover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.1); }
     </style>
 </head>
 <body class="bg-white text-slate-800 dark:bg-academic-950 dark:text-slate-300 transition-colors duration-300 antialiased leading-relaxed">
@@ -492,38 +487,6 @@
             </div>
         </section>
 
-        <!-- Annotated PDF Section -->
-        <section class="mb-10">
-            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
-                <i class="fas fa-file-pdf text-academic-500"></i>
-                Annotated PDF
-            </h2>
-            <div id="paper-pdf-section" class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
-                <div id="paper-pdf-placeholder" class="text-center">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 dark:text-slate-600 mb-4"></i>
-                    <p class="text-slate-500 dark:text-slate-400 mb-4">No annotated PDF uploaded yet.</p>
-                    <button onclick="openPdfUploadModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm">
-                        <i class="fas fa-upload"></i>
-                        Upload Annotated PDF
-                    </button>
-                </div>
-                <div id="paper-pdf-uploaded" class="hidden">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-file-pdf text-3xl text-red-500"></i>
-                            <div>
-                                <p class="font-medium text-slate-900 dark:text-white sans-font">Annotated PDF</p>
-                                <a id="paper-pdf-link" href="#" target="_blank" class="text-sm text-academic-600 dark:text-academic-400 hover:underline">View on GitHub</a>
-                            </div>
-                        </div>
-                        <button onclick="openPdfUploadModal()" class="text-sm text-slate-500 hover:text-academic-600 dark:hover:text-academic-400 transition-colors">
-                            <i class="fas fa-sync-alt"></i> Replace
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Actions -->
         <div class="flex flex-wrap gap-4 mb-12 sans-font">
             <a id="paper-source-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors">
@@ -675,101 +638,6 @@
                         <!-- Error State -->
                         <div id="oauth-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
                             <p class="text-sm text-red-600 dark:text-red-400" id="oauth-error-text">An error occurred.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PDF Upload Modal -->
-    <div id="pdf-upload-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closePdfUploadModal()"></div>
-        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-academic-950 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-200 dark:border-slate-800">
-                    <div class="bg-white dark:bg-academic-950 px-6 py-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-white sans-font flex items-center gap-2">
-                                <i class="fas fa-file-pdf text-red-500"></i>
-                                Upload Annotated PDF
-                            </h3>
-                            <button onclick="closePdfUploadModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-
-                        <!-- Upload Step -->
-                        <div id="upload-step-1">
-                            <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm">
-                                Upload your annotated PDF for "<span id="upload-paper-title" class="font-medium text-slate-900 dark:text-white">Paper Title</span>".
-                            </p>
-
-                            <!-- Drop Zone -->
-                            <div id="pdf-drop-zone" class="drop-zone rounded-lg p-8 text-center mb-6 cursor-pointer" onclick="document.getElementById('pdf-file-input').click()">
-                                <input type="file" id="pdf-file-input" accept=".pdf" class="hidden" onchange="handleFileSelect(event)">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 dark:text-slate-600 mb-4"></i>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-1">Drag and drop your PDF here</p>
-                                <p class="text-slate-400 text-xs">or click to browse</p>
-                            </div>
-
-                            <!-- Selected File -->
-                            <div id="selected-file-info" class="hidden bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
-                                <div class="flex items-center gap-3">
-                                    <i class="fas fa-file-pdf text-2xl text-red-500"></i>
-                                    <div class="flex-grow">
-                                        <p id="selected-file-name" class="font-medium text-slate-900 dark:text-white text-sm sans-font truncate">filename.pdf</p>
-                                        <p id="selected-file-size" class="text-xs text-slate-500">0 KB</p>
-                                    </div>
-                                    <button onclick="clearSelectedFile()" class="text-slate-400 hover:text-red-500">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Repository Config -->
-                            <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg mb-6">
-                                <p class="text-xs text-slate-500 mb-3 font-medium uppercase">Repository Settings</p>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs text-slate-500 mb-1">Owner</label>
-                                        <input type="text" id="repo-owner" value="aneekroy"
-                                            class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm dark:text-white font-mono">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs text-slate-500 mb-1">Repo</label>
-                                        <input type="text" id="repo-name" value="aneekroy.github.io"
-                                            class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm dark:text-white font-mono">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button onclick="uploadPdf()" id="upload-btn" disabled class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
-                                Upload to GitHub
-                            </button>
-                        </div>
-
-                        <!-- Uploading Step -->
-                        <div id="upload-step-2" class="hidden text-center py-8">
-                            <i class="fas fa-spinner fa-spin text-4xl text-academic-600 dark:text-academic-400 mb-4"></i>
-                            <p class="text-slate-600 dark:text-slate-400">Uploading to GitHub...</p>
-                        </div>
-
-                        <!-- Success Step -->
-                        <div id="upload-step-3" class="hidden text-center py-8">
-                            <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-check text-2xl text-green-600 dark:text-green-400"></i>
-                            </div>
-                            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2 sans-font">Upload Successful!</h4>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Your annotated PDF has been uploaded to GitHub.</p>
-                            <button onclick="closePdfUploadModal()" class="w-full py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors sans-font text-sm font-medium">
-                                Done
-                            </button>
-                        </div>
-
-                        <!-- Error State -->
-                        <div id="upload-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                            <p class="text-sm text-red-600 dark:text-red-400" id="upload-error-text">An error occurred.</p>
                         </div>
                     </div>
                 </div>
@@ -1367,9 +1235,6 @@
             // Update source link
             document.getElementById('paper-source-link').href = paper.link;
 
-            // Update PDF section
-            updatePdfSection(paperId, extendedData.annotated_pdf);
-
             // Load and render markdown content
             loadPaperMarkdown(paperId);
 
@@ -1574,21 +1439,6 @@
             }
         }
 
-        function updatePdfSection(paperId, pdfUrl) {
-            const placeholder = document.getElementById('paper-pdf-placeholder');
-            const uploaded = document.getElementById('paper-pdf-uploaded');
-            const pdfLink = document.getElementById('paper-pdf-link');
-
-            if (pdfUrl) {
-                placeholder.classList.add('hidden');
-                uploaded.classList.remove('hidden');
-                pdfLink.href = pdfUrl;
-            } else {
-                placeholder.classList.remove('hidden');
-                uploaded.classList.add('hidden');
-            }
-        }
-
         // --- GITHUB OAUTH ---
         // IMPORTANT: Replace with your Cloudflare Worker URL after deployment
         // See workers/github-oauth-proxy.js for setup instructions
@@ -1734,190 +1584,6 @@
 
         function isGitHubAuthenticated() {
             return !!githubAccessToken;
-        }
-
-        // --- PDF UPLOAD ---
-        let selectedPdfFile = null;
-
-        function openPdfUploadModal() {
-            if (!isGitHubAuthenticated()) {
-                openGitHubModal();
-                return;
-            }
-
-            const paper = papers.find(p => p.id === currentPaperId);
-            if (paper) {
-                document.getElementById('upload-paper-title').textContent = paper.title;
-            }
-
-            // Reset state
-            selectedPdfFile = null;
-            document.getElementById('pdf-file-input').value = '';
-            document.getElementById('selected-file-info').classList.add('hidden');
-            document.getElementById('upload-btn').disabled = true;
-            document.getElementById('upload-step-1').classList.remove('hidden');
-            document.getElementById('upload-step-2').classList.add('hidden');
-            document.getElementById('upload-step-3').classList.add('hidden');
-            document.getElementById('upload-error').classList.add('hidden');
-
-            document.getElementById('pdf-upload-modal').classList.remove('hidden');
-        }
-
-        function closePdfUploadModal() {
-            document.getElementById('pdf-upload-modal').classList.add('hidden');
-            selectedPdfFile = null;
-        }
-
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                selectedPdfFile = file;
-                document.getElementById('selected-file-name').textContent = file.name;
-                document.getElementById('selected-file-size').textContent = formatFileSize(file.size);
-                document.getElementById('selected-file-info').classList.remove('hidden');
-                document.getElementById('upload-btn').disabled = false;
-            }
-        }
-
-        function clearSelectedFile() {
-            selectedPdfFile = null;
-            document.getElementById('pdf-file-input').value = '';
-            document.getElementById('selected-file-info').classList.add('hidden');
-            document.getElementById('upload-btn').disabled = true;
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        }
-
-        // Setup drag and drop
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropZone = document.getElementById('pdf-drop-zone');
-            if (dropZone) {
-                dropZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    dropZone.classList.add('dragover');
-                });
-                dropZone.addEventListener('dragleave', () => {
-                    dropZone.classList.remove('dragover');
-                });
-                dropZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    dropZone.classList.remove('dragover');
-                    const file = e.dataTransfer.files[0];
-                    if (file && file.type === 'application/pdf') {
-                        selectedPdfFile = file;
-                        document.getElementById('selected-file-name').textContent = file.name;
-                        document.getElementById('selected-file-size').textContent = formatFileSize(file.size);
-                        document.getElementById('selected-file-info').classList.remove('hidden');
-                        document.getElementById('upload-btn').disabled = false;
-                    }
-                });
-            }
-        });
-
-        async function uploadPdf() {
-            if (!selectedPdfFile || !githubAccessToken) return;
-
-            const owner = document.getElementById('repo-owner').value.trim();
-            const repo = document.getElementById('repo-name').value.trim();
-
-            if (!owner || !repo) {
-                document.getElementById('upload-error').classList.remove('hidden');
-                document.getElementById('upload-error-text').textContent = 'Please enter repository owner and name.';
-                return;
-            }
-
-            // Show uploading state
-            document.getElementById('upload-step-1').classList.add('hidden');
-            document.getElementById('upload-step-2').classList.remove('hidden');
-            document.getElementById('upload-error').classList.add('hidden');
-
-            try {
-                // Read file as base64
-                const base64Content = await readFileAsBase64(selectedPdfFile);
-
-                // Create file path
-                const paper = papers.find(p => p.id === currentPaperId);
-                const safeName = paper.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
-                const filePath = `annotated-pdfs/paper_${currentPaperId}_${safeName}.pdf`;
-
-                // Check if file exists (to get sha for update)
-                let sha = null;
-                try {
-                    const checkResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
-                        headers: {
-                            'Authorization': `Bearer ${githubAccessToken}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-                    if (checkResponse.ok) {
-                        const existingFile = await checkResponse.json();
-                        sha = existingFile.sha;
-                    }
-                } catch (e) {
-                    // File doesn't exist, that's fine
-                }
-
-                // Upload file
-                const uploadBody = {
-                    message: `Add annotated PDF for paper ${currentPaperId}: ${paper.title}`,
-                    content: base64Content
-                };
-                if (sha) {
-                    uploadBody.sha = sha;
-                }
-
-                const uploadResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${githubAccessToken}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(uploadBody)
-                });
-
-                if (!uploadResponse.ok) {
-                    const errorData = await uploadResponse.json();
-                    throw new Error(errorData.message || 'Failed to upload file');
-                }
-
-                const result = await uploadResponse.json();
-                const pdfUrl = result.content.html_url;
-
-                // Save to localStorage and update extended data
-                localStorage.setItem(`paper_pdf_${currentPaperId}`, pdfUrl);
-                paperExtendedData[currentPaperId].annotated_pdf = pdfUrl;
-
-                // Update UI
-                updatePdfSection(currentPaperId, pdfUrl);
-
-                // Show success
-                document.getElementById('upload-step-2').classList.add('hidden');
-                document.getElementById('upload-step-3').classList.remove('hidden');
-                showToast('PDF uploaded successfully!', 'success');
-
-            } catch (error) {
-                document.getElementById('upload-step-2').classList.add('hidden');
-                document.getElementById('upload-step-1').classList.remove('hidden');
-                document.getElementById('upload-error').classList.remove('hidden');
-                document.getElementById('upload-error-text').textContent = error.message;
-            }
-        }
-
-        function readFileAsBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
         }
 
         // --- TOAST NOTIFICATIONS ---
