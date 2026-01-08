@@ -466,6 +466,27 @@
             </div>
         </section>
 
+        <!-- Paper Notes (Markdown Content) -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4 sans-font flex items-center gap-2">
+                <i class="fas fa-book-open text-academic-500"></i>
+                Paper Notes
+            </h2>
+            <div id="paper-markdown-section" class="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <div id="paper-markdown-loading" class="text-center py-8">
+                    <i class="fas fa-spinner fa-spin text-2xl text-academic-600 dark:text-academic-400 mb-4"></i>
+                    <p class="text-slate-500 dark:text-slate-400">Loading paper notes...</p>
+                </div>
+                <div id="paper-markdown-content" class="hidden prose dark:prose-invert max-w-none">
+                    <!-- Markdown content will be rendered here -->
+                </div>
+                <div id="paper-markdown-error" class="hidden text-center py-8">
+                    <i class="fas fa-info-circle text-2xl text-slate-400 mb-4"></i>
+                    <p class="text-slate-500 dark:text-slate-400">No notes available for this paper.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Actions -->
         <div class="flex flex-wrap gap-4 mb-12 sans-font">
             <a id="paper-source-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-academic-600 text-white rounded-lg hover:bg-academic-700 transition-colors">
@@ -1214,8 +1235,154 @@
             // Update source link
             document.getElementById('paper-source-link').href = paper.link;
 
+            // Load and render markdown content
+            loadPaperMarkdown(paperId);
+
             // Show view
             document.getElementById('view-paper').classList.add('active');
+        }
+
+        // --- MARKDOWN RENDERING ---
+        function markdownToHTML(markdown) {
+            const lines = markdown.split('\n');
+            const processed = [];
+            let inList = false;
+            let listItems = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                // Headers
+                if (line.startsWith('### ')) {
+                    if (inList) {
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                    }
+                    processed.push(`<h3 class="text-lg font-bold text-slate-900 dark:text-white mt-6 mb-3 sans-font">${line.substring(4)}</h3>`);
+                    continue;
+                }
+                if (line.startsWith('## ')) {
+                    if (inList) {
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                    }
+                    processed.push(`<h2 class="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4 sans-font">${line.substring(3)}</h2>`);
+                    continue;
+                }
+                if (line.startsWith('# ')) {
+                    if (inList) {
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                    }
+                    processed.push(`<h1 class="text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 sans-font">${line.substring(2)}</h1>`);
+                    continue;
+                }
+
+                // Horizontal rules
+                if (line === '---') {
+                    if (inList) {
+                        processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                        inList = false;
+                        listItems = [];
+                    }
+                    processed.push('<hr class="my-6 border-slate-200 dark:border-slate-700">');
+                    continue;
+                }
+
+                // List items
+                if (line.match(/^[-•]\s+/)) {
+                    if (!inList) {
+                        inList = true;
+                        listItems = [];
+                    }
+                    const itemText = line.replace(/^[-•]\s+/, '');
+                    listItems.push(`<li class="ml-4 mb-1 text-slate-700 dark:text-slate-300">${processInlineMarkdown(itemText)}</li>`);
+                    continue;
+                }
+
+                // End of list
+                if (inList && (line === '' || !line.match(/^[-•]\s+/))) {
+                    processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+                    inList = false;
+                    listItems = [];
+                    if (line === '') continue;
+                }
+
+                // Regular paragraphs
+                if (line && !inList) {
+                    processed.push(`<p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">${processInlineMarkdown(line)}</p>`);
+                }
+            }
+
+            if (inList) {
+                processed.push(`<ul class="list-disc list-inside space-y-1 mb-4">${listItems.join('')}</ul>`);
+            }
+
+            return processed.join('\n');
+        }
+
+        function processInlineMarkdown(text) {
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+            text = text.replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>');
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-academic-600 dark:text-academic-400 hover:underline">$1</a>');
+            text = text.replace(/`([^`]+)`/g, '<code class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-sm font-mono text-slate-900 dark:text-slate-100">$1</code>');
+            return text;
+        }
+
+        async function loadPaperMarkdown(paperId) {
+            const loadingEl = document.getElementById('paper-markdown-loading');
+            const contentEl = document.getElementById('paper-markdown-content');
+            const errorEl = document.getElementById('paper-markdown-error');
+
+            loadingEl.classList.remove('hidden');
+            contentEl.classList.add('hidden');
+            errorEl.classList.add('hidden');
+
+            // Check if running from file:// protocol (local file)
+            if (window.location.protocol === 'file:') {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                errorEl.querySelector('p').textContent = 'Notes cannot be loaded when opening file directly. Use a local server or view on GitHub Pages.';
+                return;
+            }
+
+            try {
+                const paper = papers.find(p => p.id === paperId);
+                if (!paper) throw new Error('Paper not found');
+
+                // Create filename: pad ID with zeros and sanitize title
+                const paddedId = String(paperId).padStart(2, '0');
+                let sanitizedTitle = paper.title
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/[-\s]+/g, '-')
+                    .toLowerCase();
+
+                if (sanitizedTitle.length > 100) {
+                    sanitizedTitle = sanitizedTitle.substring(0, 100);
+                }
+                sanitizedTitle = sanitizedTitle.replace(/^-+|-+$/g, '');
+
+                const markdownPath = `./blogpost/papers/${paddedId}-${sanitizedTitle}.md`;
+                console.log('Loading markdown from:', markdownPath);
+
+                const response = await fetch(markdownPath);
+                if (!response.ok) throw new Error(`Failed to load: ${markdownPath}`);
+
+                const markdown = await response.text();
+                const html = markdownToHTML(markdown);
+
+                contentEl.innerHTML = html;
+                loadingEl.classList.add('hidden');
+                contentEl.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
         }
 
         // --- GITHUB OAUTH ---
