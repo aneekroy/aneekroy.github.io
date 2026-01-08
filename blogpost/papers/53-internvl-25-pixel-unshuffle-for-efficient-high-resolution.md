@@ -35,4 +35,4 @@ Pixel unshuffle reduces visual tokens from 1024 to 256 per 448x448 tile. Improve
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

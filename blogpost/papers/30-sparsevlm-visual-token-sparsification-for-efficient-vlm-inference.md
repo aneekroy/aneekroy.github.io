@@ -35,4 +35,4 @@ Training-free text-guided token pruning and merging. Uses attention from text to
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

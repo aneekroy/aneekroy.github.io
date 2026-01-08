@@ -35,4 +35,4 @@ Novel multimodal attention mechanism to reduce computational cost. Mitigates qua
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

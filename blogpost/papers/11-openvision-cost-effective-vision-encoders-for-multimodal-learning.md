@@ -34,4 +34,4 @@ Fully open, cost-effective vision encoders (5.9M-632.1M params) enabling efficie
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

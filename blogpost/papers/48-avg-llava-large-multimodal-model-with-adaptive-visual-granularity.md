@@ -35,4 +35,4 @@ Adapts visual token granularity based on image complexity. Simple images use few
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

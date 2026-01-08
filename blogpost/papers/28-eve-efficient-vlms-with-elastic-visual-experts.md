@@ -35,4 +35,4 @@
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

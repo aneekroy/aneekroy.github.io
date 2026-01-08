@@ -35,4 +35,4 @@ Prunes visual tokens while preserving diversity. Ensures remaining tokens cover 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

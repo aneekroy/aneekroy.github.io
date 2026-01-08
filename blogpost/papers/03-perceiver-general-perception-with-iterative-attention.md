@@ -35,4 +35,4 @@ A modality-agnostic architecture using a small set of latent units to attend to 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

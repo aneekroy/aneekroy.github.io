@@ -35,4 +35,4 @@ Showed that only tuning LayerNorm parameters in attention blocks yields robust a
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

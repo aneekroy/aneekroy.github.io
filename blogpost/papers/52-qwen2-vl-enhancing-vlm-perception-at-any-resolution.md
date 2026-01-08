@@ -35,4 +35,4 @@ Naive Dynamic Resolution mechanism processes images of varying resolutions into 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

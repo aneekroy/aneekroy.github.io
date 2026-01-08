@@ -35,4 +35,4 @@ Introduces Visual Context Compressor using average pooling and LLaVolta, a stage
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

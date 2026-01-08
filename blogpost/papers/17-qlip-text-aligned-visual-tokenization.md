@@ -35,4 +35,4 @@ Quantized Language-Image Pretraining combining reconstruction quality with zero-
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

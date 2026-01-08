@@ -36,4 +36,4 @@ Implements selective removal of less informative visual tokens based on attentio
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

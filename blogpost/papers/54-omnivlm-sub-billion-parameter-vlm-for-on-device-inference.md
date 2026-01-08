@@ -35,4 +35,4 @@ Token compression reduces visual sequence from 729 to 81 tokens. Sub-billion par
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

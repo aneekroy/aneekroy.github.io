@@ -35,4 +35,4 @@ Simple yet effective token reduction method. Demonstrates that straightforward a
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

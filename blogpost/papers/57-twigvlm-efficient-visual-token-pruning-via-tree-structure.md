@@ -35,4 +35,4 @@ Organizes visual tokens in tree structure for efficient pruning. Prunes entire b
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

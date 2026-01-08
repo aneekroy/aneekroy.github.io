@@ -35,4 +35,4 @@ Multi-level hierarchical compression strategy. Compresses at patch, region, and 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

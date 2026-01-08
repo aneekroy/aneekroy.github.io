@@ -34,4 +34,4 @@ Don't Look Twice - exploits temporal redundancy in video via run-length encoding
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

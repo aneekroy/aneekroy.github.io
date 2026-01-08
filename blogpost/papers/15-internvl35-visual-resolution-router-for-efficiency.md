@@ -35,4 +35,4 @@ Visual Resolution Router (ViR) dynamically adjusts visual token resolution. Deco
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

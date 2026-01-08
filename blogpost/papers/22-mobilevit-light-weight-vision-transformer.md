@@ -36,4 +36,4 @@ Combines convolutional layers for local feature extraction with transformer laye
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

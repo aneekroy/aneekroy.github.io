@@ -37,4 +37,4 @@ Utilizes a Querying Transformer (Q-Former) that learns a set of query embeddings
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

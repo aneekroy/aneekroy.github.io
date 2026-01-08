@@ -35,4 +35,4 @@ Concatenates tokens within spatial windows to reduce sequence length. Simple app
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

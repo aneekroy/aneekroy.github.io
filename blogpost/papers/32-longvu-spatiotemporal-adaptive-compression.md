@@ -34,4 +34,4 @@ Dynamic frame sampling for long videos. Temporal token merging. Enables efficien
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

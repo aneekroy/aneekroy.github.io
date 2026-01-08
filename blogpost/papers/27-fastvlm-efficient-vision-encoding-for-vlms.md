@@ -35,4 +35,4 @@ FastViTHD hybrid encoder achieves 85x faster TTFT than LLaVA-OneVision. 3.4x sma
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

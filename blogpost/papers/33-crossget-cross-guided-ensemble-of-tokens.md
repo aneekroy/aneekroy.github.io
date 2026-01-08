@@ -35,4 +35,4 @@ Cross-modal token guidance for accelerating vision-language transformers. Achiev
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

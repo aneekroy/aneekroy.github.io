@@ -35,4 +35,4 @@ Two-step training: Universal Projection for image-text, then frozen with alignme
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

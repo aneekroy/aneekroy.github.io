@@ -37,4 +37,4 @@ Reduces model precision from floating-point to lower-bit representations, decrea
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

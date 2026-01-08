@@ -35,4 +35,4 @@ Large-scale benchmark for multimodal learning with evaluation of time/space comp
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

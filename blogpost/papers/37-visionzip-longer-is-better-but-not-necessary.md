@@ -35,4 +35,4 @@ Training-free visual token compression. Identifies key tokens using attention pa
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

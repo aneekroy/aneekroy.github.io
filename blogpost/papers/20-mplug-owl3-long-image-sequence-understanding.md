@@ -34,4 +34,4 @@ Hyper Attention Blocks (HABT) for efficient vision-language integration. Sparse 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

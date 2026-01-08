@@ -35,4 +35,4 @@ Stage-wise training with heavy compression in early epochs/layers, gradually rel
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

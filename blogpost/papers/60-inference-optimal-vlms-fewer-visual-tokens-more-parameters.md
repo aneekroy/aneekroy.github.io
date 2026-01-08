@@ -35,4 +35,4 @@ Studies optimal trade-off between LLM size and visual tokens. Finds that fewer v
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

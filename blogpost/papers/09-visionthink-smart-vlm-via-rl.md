@@ -36,4 +36,4 @@ Employs Reinforcement Learning to train a policy that decides which visual regio
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

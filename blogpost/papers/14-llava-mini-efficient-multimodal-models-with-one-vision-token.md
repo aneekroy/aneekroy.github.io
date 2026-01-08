@@ -34,4 +34,4 @@ Reduces vision tokens from 576 to 1 using modality pre-fusion. Achieves 77% FLOP
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

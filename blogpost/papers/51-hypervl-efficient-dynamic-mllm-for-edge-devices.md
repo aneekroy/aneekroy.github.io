@@ -38,4 +38,4 @@ Adapts computation at runtime based on input complexity, allocating more resourc
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

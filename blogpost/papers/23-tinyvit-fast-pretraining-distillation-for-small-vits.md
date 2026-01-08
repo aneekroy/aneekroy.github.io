@@ -37,4 +37,4 @@ Transfers knowledge from a larger teacher model to a smaller student model, achi
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

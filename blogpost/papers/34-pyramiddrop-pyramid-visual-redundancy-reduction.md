@@ -35,4 +35,4 @@ Hierarchical token pruning with pyramid structure. Fewer tokens in early layers,
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

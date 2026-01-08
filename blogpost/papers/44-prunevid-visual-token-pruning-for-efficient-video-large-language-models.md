@@ -34,4 +34,4 @@ Identifies static video regions with minimal temporal variation. Reduces redunda
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

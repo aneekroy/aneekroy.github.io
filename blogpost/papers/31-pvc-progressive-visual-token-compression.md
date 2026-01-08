@@ -35,4 +35,4 @@ Unified compression for images and videos. Progressive encoding with AdaLN layer
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

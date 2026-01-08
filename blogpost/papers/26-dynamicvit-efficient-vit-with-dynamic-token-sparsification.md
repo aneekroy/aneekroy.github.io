@@ -35,4 +35,4 @@ Progressively prunes uninformative tokens using lightweight prediction modules. 
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

@@ -35,4 +35,4 @@ Extended Perceiver with flexible querying, enabling scalable multimodal encoding
 
 ---
 
-*Generated from blogpost.html survey data*
+ 

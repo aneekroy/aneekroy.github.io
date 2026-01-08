@@ -35,4 +35,4 @@ Extensive study of visual token selection and merging strategies. Found cluster-
 
 ---
 
-*Generated from blogpost.html survey data*
+ 
