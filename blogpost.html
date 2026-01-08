@@ -1497,17 +1497,19 @@
                 // Create filename: pad ID with zeros and sanitize title
                 const paddedId = String(paperId).padStart(2, '0');
                 // Sanitize title to match Python script logic exactly
-                // Python: re.sub(r'[^\w\s-]', '', title) then re.sub(r'[-\s]+', '-', filename) then .lower()
+                // Python order: 1) Remove special chars, 2) Replace spaces/hyphens, 3) Lowercase, 4) Truncate, 5) Strip hyphens
                 let sanitizedTitle = paper.title
-                    .replace(/[^\w\s-]/g, '')  // Remove special chars (keep word chars, spaces, hyphens)
-                    .replace(/[-\s]+/g, '-')   // Replace spaces and multiple hyphens with single hyphen
-                    .toLowerCase()              // Convert to lowercase
-                    .replace(/^-+|-+$/g, '');  // Remove leading/trailing hyphens
+                    .replace(/[^\w\s-]/g, '')  // Step 1: Remove special chars (keep word chars, spaces, hyphens)
+                    .replace(/[-\s]+/g, '-')   // Step 2: Replace spaces and multiple hyphens with single hyphen
+                    .toLowerCase();             // Step 3: Convert to lowercase
                 
-                // Limit length (Python used 100, but we'll be safe)
+                // Step 4: Limit length to 100 characters (BEFORE stripping hyphens)
                 if (sanitizedTitle.length > 100) {
                     sanitizedTitle = sanitizedTitle.substring(0, 100);
                 }
+                
+                // Step 5: Remove leading/trailing hyphens (AFTER truncation)
+                sanitizedTitle = sanitizedTitle.replace(/^-+|-+$/g, '');
                 
                 const markdownPath = `blogpost/papers/${paddedId}-${sanitizedTitle}.md`;
                 
